@@ -3347,3 +3347,129 @@ body {
   color: rgba(255,255,255,0.5);
 }
 
+/* Mobile responsiveness polish */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll !important;
+  }
+
+  .header-container {
+    padding: 0 16px;
+  }
+
+  .header-scrolled {
+    height: 72px;
+  }
+
+  .hero-section {
+    min-height: auto;
+    padding-top: calc(var(--header-height) + 24px);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .hero-image-card-parallax-wrapper {
+    position: static;
+    margin-top: 12px;
+  }
+
+  .hero-image-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .card-1-wrapper,
+  .card-2-wrapper {
+    position: static;
+    margin-top: 12px;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .program-card-flipper {
+    height: auto;
+    min-height: 360px;
+  }
+
+  .flip-face {
+    padding: 24px;
+  }
+
+  .footer-newsletter-form {
+    flex-direction: column;
+  }
+
+  .footer-newsletter-form input,
+  .footer-newsletter-form button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0 12px;
+  }
+
+  .header-btn {
+    width: 100%;
+  }
+
+  .hero-section {
+    padding-top: calc(var(--header-height) + 16px);
+  }
+
+  .hero-badge {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+
+  .hero-subtitle {
+    margin-bottom: 24px;
+  }
+
+  .hero-image {
+    aspect-ratio: 4 / 5;
+  }
+
+  .mobile-nav {
+    padding: 20px 16px;
+  }
+
+  .service-card,
+  .program-card,
+  .who-card,
+  .standalone-promo-card {
+    padding: 20px;
+  }
+
+  .booking-modal-panel {
+    padding: 20px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
