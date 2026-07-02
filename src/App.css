@@ -2734,6 +2734,18 @@ body {
   line-height: 1.6;
 }
 
+.booking-success-note {
+  background: rgba(22, 112, 84, 0.12);
+  border: 1px solid rgba(22, 112, 84, 0.24);
+  color: #0f5132;
+}
+
+.booking-info-note {
+  background: rgba(14, 66, 137, 0.1);
+  border: 1px solid rgba(14, 66, 137, 0.2);
+  color: var(--text-primary);
+}
+
 .qr-code-frame {
   max-width: 200px;
   margin: 0 auto 24px;

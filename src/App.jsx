@@ -199,6 +199,7 @@ function App() {
   // Newsletter & Form Success Hooks
   const [bookingConfirmed, setBookingConfirmed] = useState(false)
   const [bookingStatusMessage, setBookingStatusMessage] = useState('')
+  const [bookingEmailSent, setBookingEmailSent] = useState(false)
 
   // Scroll reveal system
   useEffect(() => {
@@ -294,6 +295,8 @@ function App() {
     setBookingStep(1)
     setBookingModalOpen(true)
     setBookingConfirmed(false)
+    setBookingEmailSent(false)
+    setBookingStatusMessage('')
   }
 
   const bookingNeedsQrStep = bookingForm.program === 'Taekwondo Training' || bookingForm.program.includes('Demo')
@@ -313,6 +316,7 @@ function App() {
       return
     }
 
+    setBookingEmailSent(false)
     setBookingStatusMessage("Sending enquiry details. Check your email in a few minutes for confirmation.")
 
     // Send form details automatically to the owner's email in the background (using Web3Forms free tier)
@@ -340,13 +344,16 @@ function App() {
     .then(data => {
       console.log("Booking details sent automatically to email:", data);
       if (data.success) {
-        setBookingStatusMessage("Enquiry sent—check your email soon for confirmation. If it does not arrive, please check spam.")
+        setBookingEmailSent(true)
+        setBookingStatusMessage("Email enquiry sent successfully. Check your inbox or spam folder for confirmation.")
       } else {
+        setBookingEmailSent(false)
         setBookingStatusMessage("Enquiry submitted. Email confirmation may take a few minutes.")
       }
     })
     .catch(err => {
       console.error("Error sending booking details automatically:", err);
+      setBookingEmailSent(false)
       setBookingStatusMessage("Unable to send email confirmation automatically right now. Please continue on WhatsApp or retry.")
     });
 
@@ -886,6 +893,7 @@ function App() {
               <form onSubmit={handleBookingSubmit} className="booking-modal-form">
                 <h3>Schedule Your Training Slot</h3>
                 <p className="subtitle">Selected: <strong>{bookingForm.program}</strong> ({bookingForm.plan} @ {bookingForm.price})</p>
+                {bookingNeedsQrStep && <div className="booking-status-note booking-info-note">This booking type uses UPI QR first, then WhatsApp to confirm your request.</div>}
                 {bookingStatusMessage && <div className="booking-status-note">{bookingStatusMessage}</div>}
                 <div className="form-group"><label>Full Name *</label><input type="text" value={bookingForm.name} onChange={(e) => setBookingForm({...bookingForm, name: e.target.value})} required /></div>
                 <div className="form-group-row">
@@ -898,7 +906,9 @@ function App() {
             ) : (
               <div className="booking-modal-payment text-center">
                 <h3>UPI Payment QR</h3>
-                <p className="subtitle">Scan the QR code with your UPI app, then continue on WhatsApp to confirm your booking.</p>
+                <p className="subtitle">This booking type uses UPI QR first. Scan the code, then open WhatsApp to confirm your booking for <strong>{bookingForm.program}</strong>.</p>
+                {bookingStatusMessage && <div className="booking-status-note">{bookingStatusMessage}</div>}
+                {bookingEmailSent && <div className="booking-status-note booking-success-note">Email enquiry was sent successfully.</div>}
                 <div className="qr-code-frame">
                   <img src={upiQr} alt="Vertex UPI QR Code" className="qr-image" />
                 </div>
