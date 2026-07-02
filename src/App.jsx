@@ -39,7 +39,6 @@ const LinkedinIcon = () => (
 import logoFull from './assets/logo_full.jpg'
 import logoIcon from './assets/logo_icon.jpg'
 import heroGym from './assets/hero_gym_interior.png'
-import upiQr from './assets/upi_qr.jpg'
 import rateCard1 from './assets/rate_card_1.jpg'
 import rateCard2 from './assets/rate_card_2.jpg'
 import servicesTabImg from './assets/services_tab.jpg'
@@ -322,7 +321,6 @@ function App() {
     }
 
     // Send form details automatically to the owner's email in the background (using Web3Forms free tier)
-    // Replace "YOUR_ACCESS_KEY_HERE" with your Web3Forms key when ready
     const formData = new FormData();
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
     formData.append("subject", `New Vertex Performance Booking: ${bookingForm.name}`);
@@ -346,12 +344,12 @@ function App() {
       console.error("Error sending booking details automatically:", err);
     });
 
-    // Move to payment checkout step in the modal
+    executeWhatsAppRedirect();
     setBookingStep(2)
   }
 
   const executeWhatsAppRedirect = () => {
-    const greeting = `Hello Vertex! I have just booked my training slot at Vertex Performance for the "${bookingForm.program}" (${bookingForm.plan} at ${bookingForm.price}).\n\nHere is my UPI payment receipt screenshot for slot verification.`;
+    const greeting = `Hello Vertex! I would like to enquire about the "${bookingForm.program}" (${bookingForm.plan} at ${bookingForm.price}). My details are: Name - ${bookingForm.name}, Age - ${bookingForm.age}, Gender - ${bookingForm.gender}, Phone - ${bookingForm.phone}. Please help me with the next steps.`;
     window.open(`https://wa.me/918488862388?text=${encodeURIComponent(greeting)}`, '_blank');
     setBookingConfirmed(true);
   }
@@ -398,7 +396,7 @@ function App() {
             <a href="#who-we-help" className="nav-item">Who We Help</a>
             <a href="#gallery" className="nav-item">Gallery</a>
             <a href="#contact" className="nav-item">Contact</a>
-            <button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹500')} className="nav-item btn btn-primary header-btn">Book Now</button>
+            <button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹299')} className="nav-item btn btn-primary header-btn">Book Now</button>
           </nav>
           <button className="mobile-nav-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -411,7 +409,7 @@ function App() {
           <a href="#who-we-help" onClick={() => setMobileMenuOpen(false)}>Who We Help</a>
           <a href="#gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</a>
           <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Contact</a>
-          <button className="btn btn-primary" onClick={() => { setMobileMenuOpen(false); triggerBooking('Demo Session', 'Single Session', '₹500'); }}>Book Now</button>
+          <button className="btn btn-primary" onClick={() => { setMobileMenuOpen(false); triggerBooking('Demo Session', 'Single Session', '₹299'); }}>Book Now</button>
         </div>
       </header>
 
@@ -427,7 +425,7 @@ function App() {
             <h1 className="animate-hero-title">YOUR GOALS. <br /> OUR EXPERTISE. <br /><span className="text-gradient">UNSTOPPABLE YOU.</span></h1>
             <p className="hero-subtitle animate-hero-subtitle">Elite athletic strength & conditioning, custom performance programming, and active physical rehabilitation. All unified under one roof.</p>
             <div className="hero-actions animate-hero-actions">
-              <button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹500')} className="btn btn-primary">Book a Session</button>
+              <button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹299')} className="btn btn-primary">Book a Session</button>
               <a href="#programs" className="btn btn-secondary">View Programs</a>
             </div>
             <div className="hero-stats animate-hero-stats">
@@ -618,7 +616,7 @@ function App() {
           <div className="program-cta-banner reveal">
             <h3>Ready to Transform Your Performance?</h3>
             <p>Speak to a coach today or try out our facility with a Demo Session.</p>
-            <button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹500')} className="btn btn-primary text-white">Start Your Program</button>
+            <button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹299')} className="btn btn-primary text-white">Start Your Program</button>
           </div>
         </div>
       </section>
@@ -682,7 +680,7 @@ function App() {
           <div className="section-header text-center reveal">
             <div className="badge-pill">Interactive Rate Card</div>
             <h2 className="text-gradient">VERTEX RATE CARD</h2>
-            <p className="section-subtitle">We offer structured membership models. Tap on any price block or plan duration to initiate booking for that slot.</p>
+            <p className="section-subtitle">Choose a plan that fits your goals. Tap any card to enquire about availability and next steps.</p>
             <div className="billing-toggle-container">
               {['1 Month', '3 Months', '6 Months', '12 Months'].map((d) => (
                 <button key={d} onClick={() => setRateCardDuration(d)} className={`duration-selector-btn ${rateCardDuration === d ? 'active' : ''}`}>{d}</button>
@@ -695,16 +693,12 @@ function App() {
                 <tr>
                   <th>Programs</th>
                   <th>Details & Benefits</th>
-                  <th className="active-column-header text-center">Plan Cost ({rateCardDuration})</th>
                   <th className="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {rateCardData.map((row) => {
                   const isSCHighlight = row.sub.toLowerCase().includes('strength');
-                  const priceObj = row.prices[rateCardDuration];
-                  const isPromo = priceObj && priceObj.promoText && rateCardDuration === '3 Months';
-                  const finalPrice = priceObj ? (isPromo ? priceObj.promoValue : priceObj.value) : null;
                   return (
                     <tr key={row.id} className={isSCHighlight ? 'sc-highlighted-row' : ''}>
                       <td className="program-title-cell">
@@ -715,26 +709,10 @@ function App() {
                         <span className="program-sub">{row.sub}</span>
                       </td>
                       <td className="program-details-cell">{row.details}</td>
-                      {priceObj ? (
-                        <td className="price-cell active-price-cell text-center" onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, `₹${finalPrice.toLocaleString('en-IN')}`)}>
-                          <div className="price-cell-content">
-                            {isPromo && <span className="promo-pill">PROMO OFFER</span>}
-                            <span className="price-val">₹{finalPrice.toLocaleString('en-IN')}</span>
-                            {isPromo && <span className="promo-subtext">{priceObj.promoText}</span>}
-                            {priceObj.savings && <span className="savings-badge mt-1">Save ₹{priceObj.savings.toLocaleString('en-IN')}</span>}
-                          </div>
-                        </td>
-                      ) : (
-                        <td className="empty-cell text-center">—</td>
-                      )}
                       <td className="action-cell text-center">
-                        {priceObj ? (
-                          <button onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, `₹${finalPrice.toLocaleString('en-IN')}`)} className="btn btn-primary btn-sm">
-                            Book {rateCardDuration}
-                          </button>
-                        ) : (
-                          <span className="not-available-label">Contact Us</span>
-                        )}
+                        <button onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, `Enquire for ${rateCardDuration}`)} className="btn btn-primary btn-sm">
+                          Enquire Now
+                        </button>
                       </td>
                     </tr>
                   );
@@ -744,21 +722,13 @@ function App() {
           </div>
           <div className="rate-card-mobile-grid" key={rateCardDuration}>
             {rateCardData.map((row) => {
-              const priceObj = row.prices[rateCardDuration];
-              if (!priceObj) return null;
-              const isPromo = priceObj.promoText && rateCardDuration === '3 Months';
-              const finalPrice = isPromo ? priceObj.promoValue : priceObj.value;
               const isSCHighlight = row.sub.toLowerCase().includes('strength');
               return (
                 <div key={row.id} className={`rate-card-mobile-card glass reveal ${isSCHighlight ? 'sc-highlighted-card' : ''}`}>
                   {isSCHighlight && <span className="sc-badge-banner">S&C FOCUS</span>}
                   <div className="card-top"><h4>{row.name}</h4><span className="sub">{row.sub}</span></div>
                   <p className="details">{row.details}</p>
-                  <div className="price-block">
-                    <span className="duration-label">{rateCardDuration} Plan</span>
-                    <div className="price-row"><span className="amount">₹{finalPrice.toLocaleString('en-IN')}</span>{isPromo && <span className="promo-badge">PROMO</span>}</div>
-                  </div>
-                  <button onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, `₹${finalPrice.toLocaleString('en-IN')}`)} className="btn btn-primary btn-sm w-full mt-3">Book This Plan</button>
+                  <button onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, `Enquire for ${rateCardDuration}`)} className="btn btn-primary btn-sm w-full mt-3">Enquire Now</button>
                 </div>
               );
             })}
@@ -767,16 +737,16 @@ function App() {
             <div className="standalone-promo-card taekwondo-promo glass">
               <div className="promo-badge">MONTHLY COHORT</div>
               <h3>Taekwondo Training</h3>
-              <p>Self-defense, flexibility, fitness, discipline & confidence through expert martial arts coaching.</p>
-              <div className="price-tag"><span className="amount">₹2,499</span><span className="period">/ month</span></div>
-              <button onClick={() => triggerBooking('Taekwondo Training', 'Monthly', '₹2,499')} className="btn btn-secondary w-full">Book Taekwondo Slot</button>
+              <p>Two batches available: 4–14 years kids and 14+ adults. Same rate for both batches.</p>
+              <div className="price-tag"><span className="amount">₹2,999</span><span className="period">/ month</span></div>
+              <button onClick={() => triggerBooking('Taekwondo Training', 'Monthly', '₹2,999')} className="btn btn-secondary w-full">Book Taekwondo Slot</button>
             </div>
             <div className="standalone-promo-card demo-promo glass">
               <div className="promo-badge trial">LOW COMMITMENT</div>
-              <h3>+ ₹500 Trial Session</h3>
-              <p>Unsure which S&C tier fits? Book a single full coached trial session to evaluate our trainers and facility.</p>
-              <div className="price-tag"><span className="amount">₹500</span><span className="period">/ single session</span></div>
-              <button onClick={() => triggerBooking('Trial Demo Session', 'Single Session', '₹500')} className="btn btn-primary text-white w-full">Book Demo Session</button>
+              <h3>Demo Session</h3>
+              <p>Try a single coached session to evaluate our trainers, facility, and training approach.</p>
+              <div className="price-tag"><span className="amount">₹299</span><span className="period">/ single session</span></div>
+              <button onClick={() => triggerBooking('Trial Demo Session', 'Single Session', '₹299')} className="btn btn-primary text-white w-full">Book Demo Session</button>
             </div>
           </div>
         </div>
@@ -863,7 +833,7 @@ function App() {
             </div>
             <div className="footer-links-grid">
               <div><h4>Company</h4><ul className="footer-links"><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#programs">Programs</a></li><li><a href="#who-we-help">Who We Help</a></li></ul></div>
-              <div><h4>Support</h4><ul className="footer-links"><li><a href="#rate-card">Rate Card</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li><li><button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹500')} className="btn-link">Book Now</button></li></ul></div>
+              <div><h4>Support</h4><ul className="footer-links"><li><a href="#rate-card">Rate Card</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li><li><button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹299')} className="btn-link">Book Now</button></li></ul></div>
               <div><h4>Facility Hub</h4><ul className="footer-contact-info"><li><MapPin size={14} className="text-cyan" /><span>#307, Ishan Square, Chandkheda, Ahmedabad</span></li><li><Phone size={14} className="text-cyan" /><span>+91 8488-862388</span></li></ul></div>
             </div>
             <div className="footer-newsletter">
@@ -894,16 +864,18 @@ function App() {
                   <div className="form-group"><label>Gender *</label><select value={bookingForm.gender} onChange={(e) => setBookingForm({...bookingForm, gender: e.target.value})}><option>Male</option><option>Female</option><option>Other</option></select></div>
                 </div>
                 <div className="form-group"><label>Phone Number *</label><input type="tel" value={bookingForm.phone} onChange={(e) => setBookingForm({...bookingForm, phone: e.target.value})} required /></div>
-                <button type="submit" className="btn btn-primary w-full mt-4">Proceed to Payment Checkout</button>
+                <button type="submit" className="btn btn-primary w-full mt-4">Continue on WhatsApp</button>
               </form>
             ) : (
               <div className="booking-modal-payment text-center">
-                <h3>UPI QR Payment Check</h3>
-                <p className="subtitle">Send exactly <strong>{bookingForm.price}</strong> to confirm your booking.</p>
-                <div className="qr-code-frame"><img src={upiQr} alt="UPI Payment QR Code" className="qr-image" /></div>
-                <div className="payment-details-box"><p><strong>Account Holder:</strong> Adeep Mohammed S</p><div className="upi-fallback-row"><span><strong>UPI ID:</strong> <code>adeep@slc</code></span><button onClick={() => {navigator.clipboard.writeText('adeep@slc'); alert('UPI ID copied!');}} className="btn-copy-upi">Copy</button></div></div>
-                <div className="verification-warning-box"><p>⚠️ **Share the payment screenshot on WhatsApp to activate your slot.**</p></div>
-                <button onClick={executeWhatsAppRedirect} className="btn btn-primary w-full mt-4">Confirm & Send on WhatsApp</button>
+                <h3>Opening WhatsApp</h3>
+                <p className="subtitle">Your booking details are being sent to Vertex Performance on WhatsApp.</p>
+                <div className="payment-details-box">
+                  <p><strong>Program:</strong> {bookingForm.program}</p>
+                  <p><strong>Plan:</strong> {bookingForm.plan}</p>
+                  <p><strong>Price:</strong> {bookingForm.price}</p>
+                </div>
+                <button onClick={executeWhatsAppRedirect} className="btn btn-primary w-full mt-4">Open WhatsApp</button>
                 <button type="button" onClick={() => setBookingStep(1)} className="btn btn-secondary btn-sm w-full mt-2">← Back to Details Form</button>
               </div>
             )}
