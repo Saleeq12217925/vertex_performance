@@ -126,8 +126,8 @@ const rateCardData = [
   {
     id: 'sc-4',
     name: 'HYROX Training – Semi Personal',
-    sub: '3-on-1 Group Prep',
-    details: 'Small group training specifically focusing on HYROX race segments, endurance limits, and workout stations.',
+    sub: '3-4 on 1 Coaching',
+    details: 'Small group training specifically focusing on HYROX race segments, endurance limits, and workout stations, with groups of 3-4 athletes.',
     prices: {
       '1 Month': { value: 5999 },
       '3 Months': { value: 15999, savings: 2000 },
@@ -321,6 +321,7 @@ function App() {
     formData.append("program", bookingForm.program);
     formData.append("plan", bookingForm.plan);
     formData.append("price", bookingForm.price);
+    formData.append("message", `Enquiry details:\nName: ${bookingForm.name}\nAge: ${bookingForm.age}\nGender: ${bookingForm.gender}\nPhone: ${bookingForm.phone}\nProgram: ${bookingForm.program}\nPlan: ${bookingForm.plan}\nPrice: ${bookingForm.price}`);
     
     fetch("https://api.web3forms.com/submit", {
       method: "POST",
