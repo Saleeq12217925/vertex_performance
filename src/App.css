@@ -2723,6 +2723,17 @@ body {
   color: var(--primary-deep);
 }
 
+.booking-status-note {
+  background: rgba(12, 73, 138, 0.08);
+  border: 1px solid rgba(11, 111, 202, 0.18);
+  color: var(--text-primary);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .qr-code-frame {
   max-width: 200px;
   margin: 0 auto 24px;

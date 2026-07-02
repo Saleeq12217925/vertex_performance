@@ -50,6 +50,7 @@ import gallery2Img from './assets/gallery_2.jpg'
 import gallery3Img from './assets/gallery_3.jpg'
 import gallery4Img from './assets/gallery_4.jpg'
 import gallery5Img from './assets/gallery_5.jpg'
+import upiQr from './assets/upi_qr.jpg'
 
 // JSON Content Tables for all sections
 const servicesData = {
@@ -152,7 +153,8 @@ const rateCardData = [
 function App() {
   // Web3Forms free access key to receive automatic booking emails.
   // Obtain your free access key by typing your email at https://web3forms.com/
-  const WEB3FORMS_ACCESS_KEY = "c8e82d1c-e722-4467-9c9f-3ef864888623";
+  const WEB3FORMS_ACCESS_KEY = "f64a405a-5402-4421-93cb-eb2479ba4f75";
+  const UPI_ID = "vertex@oksbi";
 
   // Navigation & UI state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -196,6 +198,7 @@ function App() {
   
   // Newsletter & Form Success Hooks
   const [bookingConfirmed, setBookingConfirmed] = useState(false)
+  const [bookingStatusMessage, setBookingStatusMessage] = useState('')
 
   // Scroll reveal system
   useEffect(() => {
@@ -310,6 +313,8 @@ function App() {
       return
     }
 
+    setBookingStatusMessage("Sending enquiry details. Check your email in a few minutes for confirmation.")
+
     // Send form details automatically to the owner's email in the background (using Web3Forms free tier)
     const formData = new FormData();
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
@@ -323,6 +328,10 @@ function App() {
     formData.append("price", bookingForm.price);
     formData.append("message", `Enquiry details:\nName: ${bookingForm.name}\nAge: ${bookingForm.age}\nGender: ${bookingForm.gender}\nPhone: ${bookingForm.phone}\nProgram: ${bookingForm.program}\nPlan: ${bookingForm.plan}\nPrice: ${bookingForm.price}`);
     
+    if (bookingNeedsQrStep) {
+      setBookingStep(2)
+    }
+
     fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: formData
@@ -330,14 +339,18 @@ function App() {
     .then(res => res.json())
     .then(data => {
       console.log("Booking details sent automatically to email:", data);
+      if (data.success) {
+        setBookingStatusMessage("Enquiry sent—check your email soon for confirmation. If it does not arrive, please check spam.")
+      } else {
+        setBookingStatusMessage("Enquiry submitted. Email confirmation may take a few minutes.")
+      }
     })
     .catch(err => {
       console.error("Error sending booking details automatically:", err);
+      setBookingStatusMessage("Unable to send email confirmation automatically right now. Please continue on WhatsApp or retry.")
     });
 
-    if (bookingNeedsQrStep) {
-      setBookingStep(2)
-    } else {
+    if (!bookingNeedsQrStep) {
       executeWhatsAppRedirect()
       setBookingModalOpen(false)
     }
@@ -347,6 +360,26 @@ function App() {
     const greeting = `Hello Vertex! I would like to enquire about the "${bookingForm.program}" (${bookingForm.plan} at ${bookingForm.price}). My details are: Name - ${bookingForm.name}, Age - ${bookingForm.age}, Gender - ${bookingForm.gender}, Phone - ${bookingForm.phone}. Please help me with the next steps.`;
     window.open(`https://wa.me/918488862388?text=${encodeURIComponent(greeting)}`, '_blank');
     setBookingConfirmed(true);
+  }
+
+  const copyUpiId = () => {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(UPI_ID)
+        .then(() => setBookingStatusMessage("UPI ID copied to clipboard. Paste into your UPI app."))
+        .catch(() => setBookingStatusMessage("Tap the UPI ID to copy it manually."))
+    } else {
+      const textArea = document.createElement('textarea')
+      textArea.value = UPI_ID
+      document.body.appendChild(textArea)
+      textArea.select()
+      try {
+        document.execCommand('copy')
+        setBookingStatusMessage("UPI ID copied to clipboard. Paste into your UPI app.")
+      } catch {
+        setBookingStatusMessage("Tap the UPI ID to copy it manually.")
+      }
+      document.body.removeChild(textArea)
+    }
   }
 
   const renderServiceIcon = (iconName) => {
@@ -853,6 +886,7 @@ function App() {
               <form onSubmit={handleBookingSubmit} className="booking-modal-form">
                 <h3>Schedule Your Training Slot</h3>
                 <p className="subtitle">Selected: <strong>{bookingForm.program}</strong> ({bookingForm.plan} @ {bookingForm.price})</p>
+                {bookingStatusMessage && <div className="booking-status-note">{bookingStatusMessage}</div>}
                 <div className="form-group"><label>Full Name *</label><input type="text" value={bookingForm.name} onChange={(e) => setBookingForm({...bookingForm, name: e.target.value})} required /></div>
                 <div className="form-group-row">
                   <div className="form-group"><label>Age *</label><input type="number" value={bookingForm.age} onChange={(e) => setBookingForm({...bookingForm, age: e.target.value})} required /></div>
@@ -863,8 +897,16 @@ function App() {
               </form>
             ) : (
               <div className="booking-modal-payment text-center">
-                <h3>Opening WhatsApp</h3>
-                <p className="subtitle">Your booking details are being sent to Vertex Performance on WhatsApp.</p>
+                <h3>UPI Payment QR</h3>
+                <p className="subtitle">Scan the QR code with your UPI app, then continue on WhatsApp to confirm your booking.</p>
+                <div className="qr-code-frame">
+                  <img src={upiQr} alt="Vertex UPI QR Code" className="qr-image" />
+                </div>
+                <div className="upi-fallback-row">
+                  <span>UPI ID:</span>
+                  <code>{UPI_ID}</code>
+                  <button type="button" className="btn-copy-upi" onClick={copyUpiId}>Copy</button>
+                </div>
                 <div className="payment-details-box">
                   <p><strong>Program:</strong> {bookingForm.program}</p>
                   <p><strong>Plan:</strong> {bookingForm.plan}</p>
