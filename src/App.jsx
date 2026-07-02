@@ -305,6 +305,8 @@ function App() {
     setBookingConfirmed(false)
   }
 
+  const bookingNeedsQrStep = bookingForm.program === 'Taekwondo Training' || bookingForm.program.includes('Demo')
+
   // WhatsApp click-to-chat redirect builder
   const handleBookingSubmit = (e) => {
     e.preventDefault()
@@ -344,8 +346,12 @@ function App() {
       console.error("Error sending booking details automatically:", err);
     });
 
-    executeWhatsAppRedirect();
-    setBookingStep(2)
+    if (bookingNeedsQrStep) {
+      setBookingStep(2)
+    } else {
+      executeWhatsAppRedirect()
+      setBookingModalOpen(false)
+    }
   }
 
   const executeWhatsAppRedirect = () => {
@@ -864,7 +870,7 @@ function App() {
                   <div className="form-group"><label>Gender *</label><select value={bookingForm.gender} onChange={(e) => setBookingForm({...bookingForm, gender: e.target.value})}><option>Male</option><option>Female</option><option>Other</option></select></div>
                 </div>
                 <div className="form-group"><label>Phone Number *</label><input type="tel" value={bookingForm.phone} onChange={(e) => setBookingForm({...bookingForm, phone: e.target.value})} required /></div>
-                <button type="submit" className="btn btn-primary w-full mt-4">Continue on WhatsApp</button>
+                <button type="submit" className="btn btn-primary w-full mt-4">{bookingNeedsQrStep ? 'Proceed to UPI QR' : 'Continue on WhatsApp'}</button>
               </form>
             ) : (
               <div className="booking-modal-payment text-center">
