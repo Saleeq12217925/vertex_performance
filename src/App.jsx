@@ -389,6 +389,7 @@ function App() {
         <div className="header-container">
           <a href="#home" className="logo-link">
             <img src={logoFull} alt="Vertex Performance Logo" className="logo-img-full" />
+            <img src={logoIcon} alt="Vertex Performance Logo" className="logo-img-icon" />
           </a>
           <nav className="desktop-nav">
             <a href="#about" className="nav-item">About</a>
