@@ -114,25 +114,13 @@ const rateCardData = [
   {
     id: 'sc-2',
     name: 'Semi Personal Training',
-    sub: '3 on 1 Coaching',
-    details: 'Train in a small group of 3 with a coach. Get personal attention with group motivation. Cost-effective & result-driven.',
+    sub: '3-4 on 1 Coaching',
+    details: 'Train in a small group of 3-4 with a coach. Get personal attention with group motivation. Cost-effective & result-driven.',
     prices: {
       '1 Month': { value: 5999 },
       '3 Months': { value: 15999, savings: 2000, promoText: 'First 5 enrollments get flat ₹11,999!', promoValue: 11999 },
       '6 Months': { value: 29999, savings: 6000 },
       '12 Months': { value: 56999, savings: 15000 }
-    }
-  },
-  {
-    id: 'sc-3',
-    name: 'HYROX Training – Personal',
-    sub: '1-on-1 Prep',
-    details: 'Global race-format prep combining running and functional workouts. Build elite endurance, strength, and stamina.',
-    prices: {
-      '1 Month': { value: 9999 },
-      '3 Months': { value: 23999, savings: 6000 },
-      '6 Months': { value: 44999, savings: 15000 },
-      '12 Months': { value: 84999, savings: 35000 }
     }
   },
   {
@@ -684,8 +672,8 @@ function App() {
         </div>
         <div className="container">
           <div className="section-header text-center reveal">
-            <div className="badge-pill">Interactive Rate Card</div>
-            <h2 className="text-gradient">VERTEX RATE CARD</h2>
+            <div className="badge-pill">Interactive Programs</div>
+            <h2 className="text-gradient">Training Programs</h2>
             <p className="section-subtitle">Choose a plan that fits your goals. Tap any card to enquire about availability and next steps.</p>
             <div className="billing-toggle-container">
               {['1 Month', '3 Months', '6 Months', '12 Months'].map((d) => (
@@ -839,7 +827,7 @@ function App() {
             </div>
             <div className="footer-links-grid">
               <div><h4>Company</h4><ul className="footer-links"><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#programs">Programs</a></li><li><a href="#who-we-help">Who We Help</a></li></ul></div>
-              <div><h4>Support</h4><ul className="footer-links"><li><a href="#rate-card">Rate Card</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li><li><button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹299')} className="btn-link">Book Now</button></li></ul></div>
+              <div><h4>Support</h4><ul className="footer-links"><li><a href="#rate-card">Programs</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li><li><button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹299')} className="btn-link">Book Now</button></li></ul></div>
               <div><h4>Facility Hub</h4><ul className="footer-contact-info"><li><MapPin size={14} className="text-cyan" /><span>#307, Ishan Square, Chandkheda, Ahmedabad</span></li><li><Phone size={14} className="text-cyan" /><span>+91 8488-862388</span></li></ul></div>
             </div>
             <div className="footer-newsletter">
