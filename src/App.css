@@ -2,8 +2,8 @@
    EXTRAORDINARY MESH & BLUEPRINT GRID BODY BACKGROUND
    ========================================== */
 body {
-  background-color: #EDF1F5 !important;
-  background-image: none !important; /* Removed static gradient for canvas */
+  background-color: #F0F4F8;
+  background-image: none !important;
 }
 
 /* ==========================================
@@ -11,26 +11,30 @@ body {
    ========================================== */
 .canvas-background-layer {
   position: fixed;
-  inset: 0;
-  width: 100vw;
+  top: 0;
+  right: 0;
+  width: 55vw;        /* Right-side panel - visible in hero */
   height: 100vh;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
-  background: #F0F4F8; /* Default light backdrop */
+  background: #c8d6e5; /* Light silver-blue to match hero light bg */
+  overflow: hidden;
+  border-radius: 0 0 0 40px;
+  box-shadow: -20px 0 60px rgba(0, 63, 135, 0.12);
+  transition: background 0.5s ease;
 }
 
 .canvas-background-layer canvas {
   width: 100%;
   height: 100%;
   display: block;
-  mix-blend-mode: multiply; /* Strips the JPEG white/grey background and blends with the wrapper color */
+  object-fit: cover;
 }
 
 .foreground-layer {
   position: relative;
   z-index: 10;
   width: 100%;
-  /* Fallback transparent background to let canvas show through */
   background-color: transparent; 
 }
 
@@ -102,7 +106,7 @@ body {
   left: 0;
   width: 100%;
   height: var(--header-height);
-  z-index: 100;
+  z-index: 200;
   display: flex;
   align-items: center;
   transition: var(--transition-smooth);
@@ -260,11 +264,10 @@ body {
    ========================================== */
 .hero-section {
   padding-top: calc(var(--header-height) + 40px);
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  background: radial-gradient(circle at 80% 20%, rgba(0, 174, 239, 0.04) 0%, transparent 50%),
-              radial-gradient(circle at 10% 80%, rgba(0, 63, 135, 0.03) 0%, transparent 50%);
+  background: transparent;
 }
 
 .hero-grid {
@@ -361,7 +364,7 @@ body {
   margin-top: 4px;
 }
 
-/* Hero Image Frame & Cards */
+/* Hero Image Frame & Cards — The frame is now transparent to show the canvas */
 .hero-image-wrapper {
   position: relative;
   z-index: 2;
@@ -371,8 +374,8 @@ body {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: visible;
-  box-shadow: var(--shadow-xl);
-  border: 4px solid #FFFFFF;
+  /* No border or shadow since the canvas IS the visual */
+  min-height: 400px;
 }
 
 .hero-image {

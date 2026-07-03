@@ -256,14 +256,19 @@ function App() {
 
   // GSAP Canvas Drawing & ScrollTriggers
   useGSAP(() => {
-    if (!imagesLoaded || !canvasRef.current || !foregroundRef.current) return;
+    if (!imagesLoaded || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
+    // Set canvas to cover the whole viewport
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
     const renderFrame = (index) => {
-      const img = frameImages.current[Math.round(index)];
-      if (!img) return;
+      const frameIndex = Math.min(Math.max(Math.round(index), 0), frameCount - 1);
+      const img = frameImages.current[frameIndex];
+      if (!img || !img.complete) return;
       
       // Object-fit: cover logic
       const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
@@ -274,7 +279,8 @@ function App() {
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     };
 
-    const sequenceObj = { frame: 0 };
+    // Render first frame immediately
+    renderFrame(0);
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -282,56 +288,29 @@ function App() {
       renderFrame(sequenceObj.frame);
     };
     window.addEventListener('resize', handleResize);
-    handleResize();
 
-    // 1. Core Scroll Sequence Animation (Frames 01-40)
+    const sequenceObj = { frame: 0 };
+
+    // --- SCROLL SEQUENCE ANIMATION ---
+    // Pins the hero section so the full 40 frames play within 2 viewport-heights of scrolling.
+    // This makes it fast and punchy.
     ScrollTrigger.create({
-      trigger: foregroundRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.5,
+      trigger: '#home',
+      start: 'top top',
+      end: '+=200%', // 2x viewport height = fast playthrough
+      pin: true,
+      scrub: 0.8,
       animation: gsap.to(sequenceObj, {
         frame: frameCount - 1,
-        snap: "frame",
-        ease: "none",
+        ease: 'none',
         onUpdate: () => renderFrame(sequenceObj.frame)
       })
     });
 
-    // 2. Adaptive Background Color (Top to Middle) on the Canvas Wrapper
-    ScrollTrigger.create({
-      trigger: ".highlights-section",
-      start: "top center",
-      end: "bottom center",
-      scrub: true,
-      animation: gsap.to(".canvas-background-layer", { 
-        backgroundColor: "rgba(10, 25, 47, 1)", // #0A192F
-        ease: "none" 
-      })
-    });
-
-    // 2b. Adaptive Text Color for the Foreground Layer
-    ScrollTrigger.create({
-      trigger: ".highlights-section",
-      start: "top center",
-      end: "bottom center",
-      scrub: true,
-      animation: gsap.to(foregroundRef.current, { 
-        color: "#fff",
-        ease: "none" 
-      })
-    });
-
-    // 3. Fade out in Footer
-    ScrollTrigger.create({
-      trigger: ".contact-section",
-      start: "top center",
-      end: "top top",
-      scrub: true,
-      animation: gsap.to(".canvas-background-layer", { opacity: 0, ease: "none" })
-    });
-
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    };
   }, [imagesLoaded]);
 
   // Initial Loading Sequence (Now tied to imagesLoaded)
