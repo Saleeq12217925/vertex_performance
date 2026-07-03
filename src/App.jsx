@@ -270,7 +270,6 @@ function App() {
       const x = (canvas.width / 2) - (img.width / 2) * scale;
       const y = (canvas.height / 2) - (img.height / 2) * scale;
       
-      ctx.globalCompositeOperation = 'multiply'; // Makes white/grey background transparent over colors
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     };
@@ -299,14 +298,25 @@ function App() {
       })
     });
 
-    // 2. Adaptive Background Color (Top to Middle)
+    // 2. Adaptive Background Color (Top to Middle) on the Canvas Wrapper
+    ScrollTrigger.create({
+      trigger: ".highlights-section",
+      start: "top center",
+      end: "bottom center",
+      scrub: true,
+      animation: gsap.to(".canvas-background-layer", { 
+        backgroundColor: "rgba(10, 25, 47, 1)", // #0A192F
+        ease: "none" 
+      })
+    });
+
+    // 2b. Adaptive Text Color for the Foreground Layer
     ScrollTrigger.create({
       trigger: ".highlights-section",
       start: "top center",
       end: "bottom center",
       scrub: true,
       animation: gsap.to(foregroundRef.current, { 
-        backgroundColor: "rgba(10, 25, 47, 0.95)", // #0A192F with slight transparency
         color: "#fff",
         ease: "none" 
       })
