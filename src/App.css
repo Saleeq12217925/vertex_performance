@@ -3206,14 +3206,6 @@ body {
   opacity: 0.9;
 }
 
-/* Brighter Hero description */
-.hero-subtitle {
-  background: linear-gradient(90deg, var(--secondary-cyan) 0%, var(--primary-deep) 40%, #ffffff 50%, var(--primary-deep) 60%, var(--secondary-cyan) 100%) !important;
-  background-size: 300% 100% !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
 /* Brighter Footer brand & link text colors */
 .footer-brand p {
   color: #E2E8F0 !important;

@@ -154,7 +154,7 @@ const rateCardData = [
 function App() {
   // Web3Forms free access key to receive automatic booking emails.
   // Obtain your free access key by typing your email at https://web3forms.com/
-  const WEB3FORMS_ACCESS_KEY = "f64a405a-5402-4421-93cb-eb2479ba4f75";
+  const WEB3FORMS_ACCESS_KEY = "774976d7-0bc3-4f78-863b-ac66944a2f08";
   const UPI_ID = "vertex@oksbi";
 
   // Loading State Flow: 'loading' -> 'scattering' -> 'complete'
