@@ -89,7 +89,7 @@ const whoWeHelpData = {
     { title: 'Athletes', desc: 'Elite competitors looking to enhance power, speed, agility, and sport-specific physical resilience.' },
     { title: 'Fitness Enthusiasts', desc: 'Active individuals seeking science-backed progressive overload to break plateaus.' },
     { title: 'Beginners', desc: 'People starting their fitness journey who need professional guidance on mechanics and safety.' },
-    { title: 'Weight Loss Clients', desc: 'Clients focused on high-energy conditioning blocks combined with metabolic functional lifts.' },
+    { title: 'Individual Fitness Clients', desc: 'People seeking gym and fitness sessions for weight loss, weight gain, bodybuilding, and optimal fitness performance.' },
     { title: 'Sports Performance Clients', desc: 'Athletes requiring velocity-based training and kinetic chain enhancement.' }
   ],
   physio: [
@@ -330,7 +330,19 @@ function App() {
     formData.append("program", bookingForm.program);
     formData.append("plan", bookingForm.plan);
     formData.append("price", bookingForm.price);
-    formData.append("message", `Enquiry details:\nName: ${bookingForm.name}\nAge: ${bookingForm.age}\nGender: ${bookingForm.gender}\nPhone: ${bookingForm.phone}\nProgram: ${bookingForm.program}\nPlan: ${bookingForm.plan}\nPrice: ${bookingForm.price}`);
+    const enquiryDetails = [
+      `Enquiry details:`,
+      `Name: ${bookingForm.name}`,
+      `Age: ${bookingForm.age}`,
+      `Gender: ${bookingForm.gender}`,
+      `Phone: ${bookingForm.phone}`,
+      `Program: ${bookingForm.program}`,
+      `Plan: ${bookingForm.plan}`
+    ];
+    if (bookingForm.price) {
+      enquiryDetails.push(`Price: ${bookingForm.price}`);
+    }
+    formData.append("message", enquiryDetails.join('\n'));
     
     if (bookingNeedsQrStep) {
       setBookingStep(2)
@@ -364,7 +376,8 @@ function App() {
   }
 
   const executeWhatsAppRedirect = () => {
-    const greeting = `Hello Vertex! I would like to enquire about the "${bookingForm.program}" (${bookingForm.plan} at ${bookingForm.price}). My details are: Name - ${bookingForm.name}, Age - ${bookingForm.age}, Gender - ${bookingForm.gender}, Phone - ${bookingForm.phone}. Please help me with the next steps.`;
+    const priceSegment = bookingForm.price ? ` at ${bookingForm.price}` : '';
+    const greeting = `Hello Vertex! I would like to enquire about the "${bookingForm.program}" (${bookingForm.plan}${priceSegment}). My details are: Name - ${bookingForm.name}, Age - ${bookingForm.age}, Gender - ${bookingForm.gender}, Phone - ${bookingForm.phone}. Please help me with the next steps.`;
     window.open(`https://wa.me/918488862388?text=${encodeURIComponent(greeting)}`, '_blank');
     setBookingConfirmed(true);
   }
@@ -598,7 +611,7 @@ function App() {
                       </div>
                       <p className="program-desc">{prog.desc}</p>
                       <div className="flip-hint">
-                        <span>Tap to see pricing</span>
+                        <span>Tap to see full details</span>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 16V4m0 0L3 8m4-4l4 4"/><path d="M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
                       </div>
                     </div>
@@ -614,10 +627,9 @@ function App() {
                           {pricingRow.length > 0 ? pricingRow.map(row => (
                             <div key={row.id} className="flip-price-row">
                               <span className="flip-price-name">{row.name}</span>
-                              <span className="flip-price-value">₹{row.prices[prog.targetPlan]?.value?.toLocaleString()}</span>
                             </div>
                           )) : (
-                            <p className="flip-no-price">See rate card for pricing</p>
+                            <p className="flip-no-price">See rate card for full details</p>
                           )}
                           <button
                             className="btn btn-primary flip-book-btn"
@@ -727,6 +739,7 @@ function App() {
               <thead>
                 <tr>
                   <th>Programs</th>
+                  <th>Duration</th>
                   <th>Details & Benefits</th>
                   <th className="text-center">Action</th>
                 </tr>
@@ -743,9 +756,10 @@ function App() {
                         </div>
                         <span className="program-sub">{row.sub}</span>
                       </td>
+                      <td className="program-duration-cell">{rateCardDuration}</td>
                       <td className="program-details-cell">{row.details}</td>
                       <td className="action-cell text-center">
-                        <button onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, `Enquire for ${rateCardDuration}`)} className="btn btn-primary btn-sm">
+                        <button onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, '')} className="btn btn-primary btn-sm">
                           Enquire Now
                         </button>
                       </td>
@@ -763,7 +777,10 @@ function App() {
                   {isSCHighlight && <span className="sc-badge-banner">S&C FOCUS</span>}
                   <div className="card-top"><h4>{row.name}</h4><span className="sub">{row.sub}</span></div>
                   <p className="details">{row.details}</p>
-                  <button onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, `Enquire for ${rateCardDuration}`)} className="btn btn-primary btn-sm w-full mt-3">Enquire Now</button>
+                  <div className="mobile-price-row">
+                    <span className="mobile-duration">{rateCardDuration}</span>
+                  </div>
+                  <button onClick={() => triggerBooking(`${row.name} (${row.sub})`, rateCardDuration, '')} className="btn btn-primary btn-sm w-full mt-3">Enquire Now</button>
                 </div>
               );
             })}
@@ -892,7 +909,7 @@ function App() {
             {bookingStep === 1 ? (
               <form onSubmit={handleBookingSubmit} className="booking-modal-form">
                 <h3>Schedule Your Training Slot</h3>
-                <p className="subtitle">Selected: <strong>{bookingForm.program}</strong> ({bookingForm.plan} @ {bookingForm.price})</p>
+                <p className="subtitle">Selected: <strong>{bookingForm.program}</strong> ({bookingForm.plan}{bookingForm.price ? ` @ ${bookingForm.price}` : ''})</p>
                 {bookingNeedsQrStep && <div className="booking-status-note booking-info-note">This booking type uses UPI QR first, then WhatsApp to confirm your request.</div>}
                 {bookingStatusMessage && <div className="booking-status-note">{bookingStatusMessage}</div>}
                 <div className="form-group"><label>Full Name *</label><input type="text" value={bookingForm.name} onChange={(e) => setBookingForm({...bookingForm, name: e.target.value})} required /></div>
@@ -920,7 +937,7 @@ function App() {
                 <div className="payment-details-box">
                   <p><strong>Program:</strong> {bookingForm.program}</p>
                   <p><strong>Plan:</strong> {bookingForm.plan}</p>
-                  <p><strong>Price:</strong> {bookingForm.price}</p>
+                  {bookingForm.price && <p><strong>Price:</strong> {bookingForm.price}</p>}
                 </div>
                 <button onClick={executeWhatsAppRedirect} className="btn btn-primary w-full mt-4">Open WhatsApp</button>
                 <button type="button" onClick={() => setBookingStep(1)} className="btn btn-secondary btn-sm w-full mt-2">← Back to Details Form</button>
