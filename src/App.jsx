@@ -610,26 +610,30 @@ function App() {
           <div className="section-header text-center reveal">
             <h2 className="text-gradient">ABOUT THE COACH</h2>
           </div>
-          <div className="coach-container grid-2-columns">
+          <div className="coach-container coach-grid">
             <div className="coach-image-wrapper glass reveal" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
               <img src={coachImg} alt="Adeep Mohammed S - Head Coach" className="coach-photo" style={{ transition: 'transform 0.15s ease' }} />
               <div className="coach-image-glow"></div>
             </div>
             <div className="coach-content reveal" style={{ animationDelay: '0.2s' }}>
               <div className="coach-header">
-                <h3>Adeep Mohammed S</h3>
-                <p className="coach-title text-cyan">Head Coach, Vertex Performance — High-Performance Taekwondo Coach &amp; Strength &amp; Conditioning Specialist</p>
+                <div className="badge-pill coach-pill">Head Coach, Vertex Performance</div>
+                <h3 className="text-gradient">Adeep Mohammed S</h3>
+                <p className="coach-title text-cyan">High-Performance Taekwondo Coach &amp; Strength &amp; Conditioning Specialist</p>
               </div>
               <div className="coach-bio">
-                <p>Adeep Mohammed S is a 2nd Dan Taekwondo Black Belt and certified Strength &amp; Conditioning trainer with over 12 years of elite competitive experience under the Sports Authority of India. As a national-level athlete, Adeep has represented India on the international stage — including a place on the Indian National Taekwondo Preparatory Team at the Asian Games 2022 — and has competed at events such as the Fujairah Open International Championship and India Open International Championship.</p>
-                <p>His competitive record includes Gold medals at the All India Inter University Championship (2022) and North Zone Inter University Championship (2023), along with numerous other national and school-level podium finishes spanning nearly a decade of competition.</p>
-                <p>Beyond the mat, Adeep has led international training camps, including advanced Taekwondo and Strength &amp; Conditioning programs in Kochi and Sharjah, UAE, and holds certifications from ASCA, Setanta College, the International Olympic Committee, the University of Colorado Boulder, and the University of Lausanne. At Vertex Performance, he designs structured, science-backed training systems for athletes aged 4 to 18+, integrating strength and conditioning protocols into combat sports training to build speed, endurance, and competition-ready performance.</p>
+                <p>Adeep Mohammed S is a 2nd Dan Taekwondo Black Belt and certified Strength &amp; Conditioning trainer with over 12 years of elite competitive experience under the Sports Authority of India.</p>
+                <div className="coach-quote-box glass">
+                  <p><em>"Integrating strength and conditioning protocols into combat sports training to build speed, endurance, and competition-ready performance."</em></p>
+                </div>
+                <p>As a national-level athlete, Adeep has represented India on the international stage — including a place on the Indian National Taekwondo Preparatory Team at the Asian Games 2022. His competitive record includes Gold medals at the All India Inter University Championship (2022) and North Zone Inter University Championship (2023), along with numerous podium finishes spanning a decade of competition.</p>
+                <p>Beyond the mat, he has led international training camps in Kochi and Sharjah, and holds certifications from ASCA, Setanta College, the IOC, the University of Colorado Boulder, and the University of Lausanne. At Vertex Performance, he designs structured, science-backed training systems for athletes of all ages.</p>
               </div>
               <div className="coach-badges">
                 <div className="coach-badge"><span>12+ Years Experience</span></div>
                 <div className="coach-badge"><span>2nd Dan Black Belt</span></div>
                 <div className="coach-badge"><span>Asian Games 2022</span></div>
-                <div className="coach-badge"><span>6 Certifications</span></div>
+                <div className="coach-badge"><span>6+ Certifications</span></div>
               </div>
             </div>
           </div>

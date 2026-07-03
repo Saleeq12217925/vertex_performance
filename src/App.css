@@ -598,8 +598,22 @@ body {
    ABOUT THE COACH SECTION
    ========================================== */
 .coach-section {
-  padding: 80px 0;
+  padding: 100px 0;
   background-color: var(--bg-body);
+}
+
+.coach-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .coach-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 
 .coach-image-wrapper {
@@ -657,10 +671,39 @@ body {
   font-size: 1.1rem;
 }
 
+.coach-pill {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary-deep);
+  background: var(--bg-card);
+  border-color: var(--secondary-cyan);
+}
+
 .coach-bio p {
   margin-bottom: 16px;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.coach-quote-box {
+  padding: 24px;
+  border-left: 4px solid var(--secondary-cyan);
+  margin: 24px 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: rgba(0, 174, 239, 0.05);
+}
+
+.coach-quote-box p {
+  margin: 0 !important;
+  color: var(--text-primary);
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 500;
 }
 
 .coach-bio p:last-child {
