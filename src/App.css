@@ -222,7 +222,7 @@ body {
 
 .hero-subtitle {
   font-size: clamp(1.05rem, 2vw, 1.2rem);
-  color: rgba(255, 255, 255, 0.9);
+  color: #BAE6FD;
   margin-top: 16px;
   margin-bottom: 36px;
   max-width: 600px;
@@ -2991,7 +2991,7 @@ body {
 
 /* Brighter Hero description */
 .hero-subtitle {
-  color: rgba(255, 255, 255, 0.92) !important;
+  color: #BAE6FD !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
