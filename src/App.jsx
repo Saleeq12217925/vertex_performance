@@ -750,9 +750,9 @@ function App() {
                   return (
                     <tr key={row.id} className={isSCHighlight ? 'sc-highlighted-row' : ''}>
                       <td className="program-title-cell">
-                        <div className="title-row-container">
+                        <div className="program-name-row">
                           <strong>{row.name}</strong>
-                          {isSCHighlight && <span className="sc-table-badge">S&C FOCUS</span>}
+                          {isSCHighlight && <span className="sc-table-badge">S&amp;C FOCUS</span>}
                         </div>
                         <span className="program-sub">{row.sub}</span>
                       </td>
