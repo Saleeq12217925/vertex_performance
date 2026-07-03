@@ -542,9 +542,10 @@ function App() {
               <div className="stat-card"><div className="stat-value">Elite</div><div className="stat-label">S&C Facility</div></div>
             </div>
           </div>
-          <div className="hero-image-wrapper animate-hero-image" style={{ minHeight: '600px' }}>
-            <div className="hero-image-frame" style={{ transform: `perspective(1200px) rotateX(${heroTilt.tiltX}deg) rotateY(${heroTilt.tiltY}deg)`, transformStyle: 'preserve-3d', background: 'transparent', boxShadow: 'none', border: 'none' }}>
-              {/* Image moved to CSS background of .hero-section */}
+          <div className="hero-image-wrapper animate-hero-image">
+            <div className="hero-image-frame" style={{ transform: `perspective(1200px) rotateX(${heroTilt.tiltX}deg) rotateY(${heroTilt.tiltY}deg)`, transformStyle: 'preserve-3d' }}>
+              <img src={heroGym} alt="Vertex Performance Premium Facility" className="hero-image" />
+              
               {/* Floating 3D Parallax Card 1 */}
               <div className="hero-image-card-parallax-wrapper card-1-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
                 <div className="hero-image-card">
@@ -990,11 +991,6 @@ function App() {
               <div><h4>Company</h4><ul className="footer-links"><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#programs">Programs</a></li><li><a href="#who-we-help">Who We Help</a></li></ul></div>
               <div><h4>Support</h4><ul className="footer-links"><li><a href="#rate-card">Programs</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li><li><button onClick={() => triggerBooking('Demo Session', 'Single Session', '₹299')} className="btn-link">Book Now</button></li></ul></div>
               <div><h4>Facility Hub</h4><ul className="footer-contact-info"><li><MapPin size={14} className="text-cyan" /><span>#307, Ishan Square, Chandkheda, Ahmedabad</span></li><li><Phone size={14} className="text-cyan" /><span>+91 8488-862388</span></li></ul></div>
-            </div>
-            <div className="footer-newsletter">
-              <h4>Subscribe to Vertex Intel</h4>
-              <p className="newsletter-subtitle">Get science-backed S&C tips and injury rehabilitation guides direct to your inbox.</p>
-              {newsletterSubmitted ? <div className="newsletter-success animate-fade-in-up"><Check size={16} className="text-cyan" /><span>Successfully subscribed! Welcome aboard.</span></div> : <form onSubmit={(e) => { e.preventDefault(); setNewsletterSubmitted(true) }} className="footer-newsletter-form"><input type="email" placeholder="Enter your email" value={newsletterEmail} onChange={(e) => setNewsletterEmail(e.target.value)} required /><button type="submit" className="btn btn-primary footer-newsletter-btn">Subscribe</button></form>}
             </div>
           </div>
           <div className="footer-bottom"><p>&copy; {new Date().getFullYear()} Vertex Performance Centre. All Rights Reserved.</p></div>
