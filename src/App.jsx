@@ -611,32 +611,41 @@ function App() {
           <div className="section-header text-center reveal">
             <h2 className="text-gradient">ABOUT THE COACH</h2>
           </div>
-          <div className="coach-container coach-grid">
-            <div className="coach-image-wrapper glass reveal" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
-              <img src={coachImg} alt="Adeep Mohammed S - Head Coach" className="coach-photo" style={{ transition: 'transform 0.15s ease' }} />
-              <div className="coach-image-glow"></div>
-            </div>
-            <div className="coach-content reveal" style={{ animationDelay: '0.2s' }}>
-              <div className="coach-header">
+          <div className="coach-bento-layout">
+            
+            {/* The Image Box & Floating Identity */}
+            <div className="coach-hero-bento reveal" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
+              <div className="coach-image-wrapper">
+                <img src={coachImg} alt="Adeep Mohammed S - Head Coach" className="coach-photo" style={{ transition: 'transform 0.15s ease' }} />
+                <div className="coach-image-gradient"></div>
+              </div>
+              
+              <div className="coach-floating-identity glass">
                 <div className="badge-pill coach-pill">Head Coach, Vertex Performance</div>
-                <h3 className="text-gradient">Adeep Mohammed S</h3>
+                <h3 className="text-gradient coach-huge-name">ADEEP MOHAMMED S</h3>
                 <p className="coach-title text-cyan">High-Performance Taekwondo Coach &amp; Strength &amp; Conditioning Specialist</p>
               </div>
-              <div className="coach-bio">
-                <p>Adeep Mohammed S is a 2nd Dan Taekwondo Black Belt and certified Strength &amp; Conditioning trainer with over 12 years of elite competitive experience under the Sports Authority of India.</p>
-                <div className="coach-quote-box glass">
-                  <p><em>"Integrating strength and conditioning protocols into combat sports training to build speed, endurance, and competition-ready performance."</em></p>
-                </div>
+            </div>
+
+            {/* The Bio Bento Grid */}
+            <div className="coach-bio-bento reveal" style={{ animationDelay: '0.2s' }}>
+              <div className="bento-box glass quote-bento">
+                <p className="premium-quote"><em>"Integrating strength and conditioning protocols into combat sports training to build speed, endurance, and competition-ready performance."</em></p>
+              </div>
+              
+              <div className="bento-box glass text-bento">
                 <p>As an international-level athlete, Adeep has represented India on the global stage — including a place on the Indian National Taekwondo Preparatory Team for the Asian Games 2022. His competitive record includes Gold medals at the All India Inter University Championship (2022) and North Zone Inter University Championship (2023), along with numerous podium finishes spanning a decade of competition.</p>
                 <p>Beyond the mat, he has led international training camps in Sharjah, Dubai (UAE), and Kochi, and holds certifications from ASCA, Setanta College, the IOC, the University of Colorado Boulder, and the University of Lausanne. At Vertex Performance, he designs structured, science-backed training systems for athletes of all ages.</p>
               </div>
-              <div className="coach-badges">
+
+              <div className="bento-box glass badges-bento">
                 <div className="coach-badge"><span>12+ Years Experience</span></div>
                 <div className="coach-badge"><span>2nd Dan Black Belt</span></div>
                 <div className="coach-badge"><span>Asian Games 2022</span></div>
                 <div className="coach-badge"><span>6+ Certifications</span></div>
               </div>
             </div>
+            
           </div>
         </div>
       </section>
