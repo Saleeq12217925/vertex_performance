@@ -529,7 +529,7 @@ body {
    HIGHLIGHTS (S&C FOCUS)
    ========================================== */
 .highlights-section {
-  background-color: var(--bg-card);
+  background-color: transparent;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -616,7 +616,7 @@ body {
    ========================================== */
 .coach-section {
   padding: 120px 0;
-  background-color: var(--bg-body); /* Reverted to light theme */
+  background-color: transparent; /* Reverted to light theme */
   position: relative;
 }
 
@@ -816,7 +816,7 @@ body {
    SERVICES SECTION
    ========================================== */
 .services-section {
-  background-color: var(--bg-body);
+  background-color: transparent;
 }
 
 .services-bg-glow {
@@ -949,7 +949,7 @@ body {
    SCHEDULE SECTION
    ========================================== */
 .schedule-section {
-  background-color: var(--bg-card);
+  background-color: transparent;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -1107,7 +1107,7 @@ body {
    VERTEX GOAL MATCH SYSTEM
    ========================================== */
 .calculator-section {
-  background-color: var(--bg-body);
+  background-color: transparent;
 }
 
 .calculator-bg-lines {
@@ -1350,7 +1350,7 @@ body {
    PRICING / MEMBERSHIPS
    ========================================== */
 .pricing-section {
-  background-color: var(--bg-card);
+  background-color: transparent;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -1589,7 +1589,7 @@ body {
    CONTACT SECTION
    ========================================== */
 .contact-section {
-  background-color: var(--bg-body);
+  background-color: transparent;
 }
 
 .contact-info-block {
@@ -2025,7 +2025,7 @@ body {
 
 /* Programs Cards Layout */
 .programs-section {
-  background-color: var(--bg-body);
+  background-color: transparent;
   padding: 100px 24px;
   position: relative;
 }
@@ -2120,7 +2120,7 @@ body {
 
 /* Who We Help Cards */
 .who-we-help-section {
-  background-color: var(--bg-card);
+  background-color: transparent;
   padding: 100px 24px;
 }
 
@@ -2222,7 +2222,7 @@ body {
    RATE CARD INTERACTIVE PRICING TABLE STYLES
    ========================================== */
 .rate-card-section {
-  background-color: var(--bg-card);
+  background-color: transparent;
   padding: 100px 24px;
   position: relative;
 }
@@ -2682,7 +2682,7 @@ body {
    GALLERY MASONRY STYLES
    ========================================== */
 .gallery-section {
-  background-color: var(--bg-body);
+  background-color: transparent;
   padding: 100px 24px;
 }
 
