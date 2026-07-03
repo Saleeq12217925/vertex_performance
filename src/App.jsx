@@ -542,10 +542,9 @@ function App() {
               <div className="stat-card"><div className="stat-value">Elite</div><div className="stat-label">S&C Facility</div></div>
             </div>
           </div>
-          <div className="hero-image-wrapper animate-hero-image">
-            <div className="hero-image-frame" style={{ transform: `perspective(1200px) rotateX(${heroTilt.tiltX}deg) rotateY(${heroTilt.tiltY}deg)`, transformStyle: 'preserve-3d' }}>
-              <img src={heroGym} alt="Vertex Performance Premium Facility" className="hero-image" />
-              
+          <div className="hero-image-wrapper animate-hero-image" style={{ minHeight: '600px' }}>
+            <div className="hero-image-frame" style={{ transform: `perspective(1200px) rotateX(${heroTilt.tiltX}deg) rotateY(${heroTilt.tiltY}deg)`, transformStyle: 'preserve-3d', background: 'transparent', boxShadow: 'none', border: 'none' }}>
+              {/* Image moved to CSS background of .hero-section */}
               {/* Floating 3D Parallax Card 1 */}
               <div className="hero-image-card-parallax-wrapper card-1-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
                 <div className="hero-image-card">
