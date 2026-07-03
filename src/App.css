@@ -14,6 +14,65 @@ body {
 }
 
 /* ==========================================
+   GLOBAL LOADING SCREEN
+   ========================================== */
+.global-loader {
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-dark);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.global-loader.scattering {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-logo {
+  width: 240px;
+  height: 90px;
+  object-fit: contain;
+  animation: loader-pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes loader-pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 15px rgba(0, 174, 239, 0.5)); }
+}
+
+.scatter-grid {
+  position: relative;
+  width: 240px;
+  height: 90px;
+}
+
+.scatter-piece {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-size: 240px 90px;
+  background-repeat: no-repeat;
+  animation: scatter-explode 1.2s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes scatter-explode {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ==========================================
    HEADER & NAVIGATION
    ========================================== */
 .header {
@@ -221,12 +280,27 @@ body {
 }
 
 .hero-subtitle {
-  font-size: clamp(1.05rem, 2vw, 1.2rem);
-  color: #BAE6FD;
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  
+  /* Shimmer Gradient setup */
+  background: linear-gradient(90deg, var(--primary-deep) 0%, var(--secondary-cyan) 40%, #ffffff 50%, var(--secondary-cyan) 60%, var(--primary-deep) 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 6s linear infinite;
+  
   margin-top: 16px;
   margin-bottom: 36px;
   max-width: 600px;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  line-height: 1.6;
+}
+
+@keyframes text-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: -50% 50%; }
 }
 
 .hero-actions {
@@ -518,6 +592,106 @@ body {
   .highlight-img {
     aspect-ratio: 4/3;
   }
+}
+
+/* ==========================================
+   ABOUT THE COACH SECTION
+   ========================================== */
+.coach-section {
+  padding: 80px 0;
+  background-color: var(--bg-body);
+}
+
+.coach-image-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  padding: 8px;
+  background: var(--gradient-glass);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transform-style: preserve-3d !important;
+  perspective: 1000px !important;
+}
+
+.coach-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: calc(var(--radius-lg) - 6px);
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.coach-image-wrapper:hover .coach-photo {
+  transform: translateZ(30px) scale(1.05) !important;
+}
+
+.coach-image-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at center, rgba(0, 174, 239, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.coach-image-wrapper:hover .coach-image-glow {
+  transform: translateZ(15px) !important;
+}
+
+.coach-header {
+  margin-bottom: 24px;
+}
+
+.coach-header h3 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--primary-deep);
+  margin-bottom: 8px;
+}
+
+.coach-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.coach-bio p {
+  margin-bottom: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.coach-bio p:last-child {
+  margin-bottom: 32px;
+}
+
+.coach-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.coach-badge {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-deep);
+  box-shadow: 0 2px 8px rgba(0, 37, 82, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-fast);
+}
+
+.coach-badge:hover {
+  transform: translateY(-2px);
+  border-color: var(--secondary-cyan);
+  box-shadow: 0 4px 12px rgba(0, 174, 239, 0.1);
 }
 
 /* ==========================================
@@ -2991,8 +3165,10 @@ body {
 
 /* Brighter Hero description */
 .hero-subtitle {
-  color: #BAE6FD !important;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+  background: linear-gradient(90deg, var(--secondary-cyan) 0%, var(--primary-deep) 40%, #ffffff 50%, var(--primary-deep) 60%, var(--secondary-cyan) 100%) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 /* Brighter Footer brand & link text colors */

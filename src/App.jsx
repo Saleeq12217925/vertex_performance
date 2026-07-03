@@ -43,6 +43,7 @@ import rateCard1 from './assets/rate_card_1.jpg'
 import rateCard2 from './assets/rate_card_2.jpg'
 import servicesTabImg from './assets/services_tab.jpg'
 import navStrip from './assets/nav_strip.png'
+import coachImg from './assets/final_navy.png'
 
 // New Gallery Image Imports
 import gallery1Img from './assets/gallery_1.jpg'
@@ -156,6 +157,9 @@ function App() {
   const WEB3FORMS_ACCESS_KEY = "f64a405a-5402-4421-93cb-eb2479ba4f75";
   const UPI_ID = "vertex@oksbi";
 
+  // Loading State Flow: 'loading' -> 'scattering' -> 'complete'
+  const [loadingState, setLoadingState] = useState('loading')
+
   // Navigation & UI state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -200,6 +204,24 @@ function App() {
   const [bookingConfirmed, setBookingConfirmed] = useState(false)
   const [bookingStatusMessage, setBookingStatusMessage] = useState('')
   const [bookingEmailSent, setBookingEmailSent] = useState(false)
+
+  // Initial Loading Sequence
+  useEffect(() => {
+    // 1. Show static pulsing logo for 1.5s
+    const scatterTimer = setTimeout(() => {
+      setLoadingState('scattering')
+    }, 1500)
+    
+    // 2. Wait for 1.2s scatter animation to finish before unmounting
+    const completeTimer = setTimeout(() => {
+      setLoadingState('complete')
+    }, 2700)
+
+    return () => {
+      clearTimeout(scatterTimer)
+      clearTimeout(completeTimer)
+    }
+  }, [])
 
   // Scroll reveal system
   useEffect(() => {
@@ -427,6 +449,41 @@ function App() {
 
   return (
     <>
+      {loadingState !== 'complete' && (
+        <div className={`global-loader ${loadingState === 'scattering' ? 'scattering' : ''}`}>
+          {loadingState === 'loading' ? (
+            <img src={logoFull} alt="Vertex Performance Logo" className="loader-logo loader-pulse" />
+          ) : (
+            <div className="scatter-grid">
+              {Array.from({ length: 24 }).map((_, i) => {
+                const row = Math.floor(i / 8);
+                const col = i % 8;
+                const tx = (col - 3.5) * 60 + (Math.random() * 120 - 60);
+                const ty = (row - 1) * 60 + (Math.random() * 120 - 60);
+                const rot = Math.random() * 180 - 90;
+                const delay = Math.random() * 0.2;
+                return (
+                  <div 
+                    key={i} 
+                    className="scatter-piece" 
+                    style={{
+                      left: `${col * 30}px`,
+                      top: `${row * 30}px`,
+                      backgroundImage: `url(${logoFull})`,
+                      backgroundPosition: `${(col / 7) * 100}% ${(row / 2) * 100}%`,
+                      '--tx': `${tx}px`,
+                      '--ty': `${ty}px`,
+                      '--rot': `${rot}deg`,
+                      '--delay': `${delay}s`
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="floating-orb orb-1" style={{ transform: `translate3d(${-heroTilt.x * 0.5}px, ${-heroTilt.y * 0.5}px, 0)` }}></div>
       <div className="floating-orb orb-2" style={{ transform: `translate3d(${heroTilt.x * 0.3}px, ${heroTilt.y * 0.3}px, 0)` }}></div>
       <div className="floating-orb orb-3" style={{ transform: `translate3d(${-heroTilt.x * 0.2}px, ${-heroTilt.y * 0.2}px, 0)` }}></div>
@@ -439,6 +496,7 @@ function App() {
           </a>
           <nav className="desktop-nav">
             <a href="#about" className="nav-item">About</a>
+            <a href="#coach" className="nav-item">Our Coach</a>
             <a href="#services" className="nav-item">Services</a>
             <a href="#programs" className="nav-item">Programs</a>
             <a href="#who-we-help" className="nav-item">Who We Help</a>
@@ -452,6 +510,7 @@ function App() {
         </div>
         <div className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}>
           <a href="#about" onClick={() => setMobileMenuOpen(false)}>About</a>
+          <a href="#coach" onClick={() => setMobileMenuOpen(false)}>Our Coach</a>
           <a href="#services" onClick={() => setMobileMenuOpen(false)}>Services</a>
           <a href="#programs" onClick={() => setMobileMenuOpen(false)}>Programs</a>
           <a href="#who-we-help" onClick={() => setMobileMenuOpen(false)}>Who We Help</a>
@@ -542,6 +601,37 @@ function App() {
             <div className="trust-badge"><span className="badge-bullet"></span><span>Expert Care</span></div>
             <div className="trust-badge"><span className="badge-bullet"></span><span>Better Performance</span></div>
             <div className="trust-badge"><span className="badge-bullet"></span><span>Stronger You</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="coach" className="coach-section">
+        <div className="container">
+          <div className="section-header text-center reveal">
+            <h2 className="text-gradient">ABOUT THE COACH</h2>
+          </div>
+          <div className="coach-container grid-2-columns">
+            <div className="coach-image-wrapper glass reveal" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
+              <img src={coachImg} alt="Adeep Mohammed S - Head Coach" className="coach-photo" style={{ transition: 'transform 0.15s ease' }} />
+              <div className="coach-image-glow"></div>
+            </div>
+            <div className="coach-content reveal" style={{ animationDelay: '0.2s' }}>
+              <div className="coach-header">
+                <h3>Adeep Mohammed S</h3>
+                <p className="coach-title text-cyan">Head Coach, Vertex Performance — High-Performance Taekwondo Coach &amp; Strength &amp; Conditioning Specialist</p>
+              </div>
+              <div className="coach-bio">
+                <p>Adeep Mohammed S is a 2nd Dan Taekwondo Black Belt and certified Strength &amp; Conditioning trainer with over 12 years of elite competitive experience under the Sports Authority of India. As a national-level athlete, Adeep has represented India on the international stage — including a place on the Indian National Taekwondo Preparatory Team at the Asian Games 2022 — and has competed at events such as the Fujairah Open International Championship and India Open International Championship.</p>
+                <p>His competitive record includes Gold medals at the All India Inter University Championship (2022) and North Zone Inter University Championship (2023), along with numerous other national and school-level podium finishes spanning nearly a decade of competition.</p>
+                <p>Beyond the mat, Adeep has led international training camps, including advanced Taekwondo and Strength &amp; Conditioning programs in Kochi and Sharjah, UAE, and holds certifications from ASCA, Setanta College, the International Olympic Committee, the University of Colorado Boulder, and the University of Lausanne. At Vertex Performance, he designs structured, science-backed training systems for athletes aged 4 to 18+, integrating strength and conditioning protocols into combat sports training to build speed, endurance, and competition-ready performance.</p>
+              </div>
+              <div className="coach-badges">
+                <div className="coach-badge"><span>12+ Years Experience</span></div>
+                <div className="coach-badge"><span>2nd Dan Black Belt</span></div>
+                <div className="coach-badge"><span>Asian Games 2022</span></div>
+                <div className="coach-badge"><span>6 Certifications</span></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -693,25 +783,25 @@ function App() {
         <div className="container">
           <div className="section-header text-center reveal">
             <h2 className="text-gradient">HOW WE HELP</h2>
-            <p className="section-subtitle">Our structured biomechanical pipeline ensures you move from diagnostic checks to loaded physical capacity safely.</p>
+            <p className="section-subtitle">At Vertex Performance, we deliver private and semi-private gym &amp; fitness sessions for individuals of all age groups. We specialise in physiotherapy, movement recovery, high performance athlete coaching, strength coaching, and Taekwondo training.</p>
           </div>
           <div className="how-checklist-container grid-2-columns">
             <div className="how-glass-panel glass reveal">
-              <div className="panel-header"><Dumbbell className="text-cyan" size={24} /><h3>Fitness & Performance Path</h3></div>
+              <div className="panel-header"><Dumbbell className="text-cyan" size={24} /><h3>Fitness & Strength Coaching</h3></div>
               <ul className="how-list">
-                <li><div className="check-bullet"><Check size={14} /></div><span>Dynamic force production screen to set training baselines.</span></li>
-                <li><div className="check-bullet"><Check size={14} /></div><span>Individually tailored training blocks emphasizing compound mechanics.</span></li>
-                <li><div className="check-bullet"><Check size={14} /></div><span>Velocity tracking to manage central nervous system loading.</span></li>
-                <li><div className="check-bullet"><Check size={14} /></div><span>Progressive loading blocks for power transfer and agility blocks.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>Private & semi-private gym sessions tailored to your goals.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>Strength coaching for all age groups — beginners to advanced athletes.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>High performance athlete programming for competitive sport.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>Taekwondo training for discipline, agility and sport-specific fitness.</span></li>
               </ul>
             </div>
             <div className="how-glass-panel glass reveal">
-              <div className="panel-header"><HeartPulse className="text-cyan" size={24} /><h3>Physiotherapy & Recovery Path</h3></div>
+              <div className="panel-header"><HeartPulse className="text-cyan" size={24} /><h3>Physiotherapy & Movement Recovery</h3></div>
               <ul className="how-list">
-                <li><div className="check-bullet"><Check size={14} /></div><span>Advanced biomechanical joint scan to locate pain triggers.</span></li>
-                <li><div className="check-bullet"><Check size={14} /></div><span>Manual therapy, joint mobilization, and localized pain management.</span></li>
-                <li><div className="check-bullet"><Check size={14} /></div><span>Guided rehab training focusing on mobility and tendon recovery.</span></li>
-                <li><div className="check-bullet"><Check size={14} /></div><span>Active return-to-sport testing under loading benchmarks.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>Expert physiotherapy for injury assessment, treatment and prevention.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>Movement recovery programs designed around your body's specific needs.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>Guided rehab training focusing on mobility, joint health and return to sport.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>Ongoing support for active individuals managing chronic or post-surgery conditions.</span></li>
               </ul>
             </div>
           </div>
@@ -808,7 +898,7 @@ function App() {
         <div className="container">
           <div className="section-header text-center reveal">
             <h2 className="text-gradient">FACILITY & TRAINING GALLERY</h2>
-            <p className="section-subtitle">Tour our elite S&C turf tracks, functional weight platforms, and physical therapy assessment rooms.</p>
+            <p className="section-subtitle">Tour our elite S&C turf tracks, functional weight platforms, and physical therapy assessment room.</p>
             <div className="gallery-filters reveal">
               {['all', 'facility', 'training'].map(f => (
                 <button key={f} onClick={() => setGalleryFilter(f)} className={`gallery-filter-btn ${galleryFilter === f ? 'active' : ''}`}>{f.toUpperCase().replace('-', ' ')}</button>
