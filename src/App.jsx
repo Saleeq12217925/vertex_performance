@@ -275,6 +275,8 @@ function App() {
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     };
 
+    const sequenceObj = { frame: 0 };
+
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -282,8 +284,6 @@ function App() {
     };
     window.addEventListener('resize', handleResize);
     handleResize();
-
-    const sequenceObj = { frame: 0 };
 
     // 1. Core Scroll Sequence Animation (Frames 01-40)
     ScrollTrigger.create({
