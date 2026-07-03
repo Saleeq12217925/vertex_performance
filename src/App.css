@@ -682,9 +682,9 @@ body {
 
 .coach-bio p {
   margin-bottom: 16px;
-  color: #cbd5e1;
+  color: #475569;
   font-family: var(--font-heading);
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.8;
   font-size: 1.1rem;
@@ -700,11 +700,11 @@ body {
 
 .coach-quote-box p {
   margin: 0 !important;
-  color: #f8fafc;
+  color: #0f172a;
   font-size: 1.25rem;
   font-style: italic;
-  font-weight: 400;
-  letter-spacing: 0.03em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 .coach-bio p:last-child {
