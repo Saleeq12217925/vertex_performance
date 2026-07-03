@@ -344,6 +344,7 @@ function App() {
     // Send form details automatically to the owner's email in the background (using Web3Forms free tier)
     const formData = new FormData();
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("from_name", "Vertex Performance Website");
     formData.append("subject", `New Vertex Performance Booking: ${bookingForm.name}`);
     formData.append("name", bookingForm.name);
     formData.append("age", bookingForm.age);
