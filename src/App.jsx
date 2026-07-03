@@ -58,7 +58,7 @@ const servicesData = {
   fitness: [
     { id: 'fit-1', title: 'Functional Training', desc: 'Movement-based exercises for real-world strength', icon: 'Activity' },
     { id: 'fit-2', title: 'Strength & Conditioning', desc: 'Progressive resistance training programs', icon: 'Dumbbell', highlight: true },
-    { id: 'fit-3', title: 'Performance Coaching', desc: 'Expert guidance for athletic development', icon: 'Award' },
+    { id: 'fit-3', title: 'Performance Training', desc: 'Expert guidance for athletic development', icon: 'Award' },
     { id: 'fit-4', title: 'Personalized Fitness', desc: 'Customized programs based on individual goals', icon: 'UserCheck' },
     { id: 'fit-5', title: 'HYROX Training', desc: 'Global fitness race format combining 8km running with 8 functional workout stations; builds endurance, strength, stamina & overall performance', icon: 'Timer' },
     { id: 'fit-6', title: 'Taekwondo Training', desc: 'Self-defense, fitness, flexibility, discipline & confidence through expert taekwondo training', icon: 'Sparkles' }
@@ -105,7 +105,7 @@ const rateCardData = [
     id: 'sc-1',
     name: 'Personal One-on-One',
     sub: 'Strength & Conditioning',
-    details: '1:1 coaching, customized program, private gym hour. You own the gym for 1 hour — no one else will enter or use.',
+    details: '1:1 training, customized program, private gym hour. You own the gym for 1 hour — no one else will enter or use.',
     prices: {
       '1 Month': { value: 9999 },
       '3 Months': { value: 23999, savings: 6000 },
@@ -116,7 +116,7 @@ const rateCardData = [
   {
     id: 'sc-2',
     name: 'Semi Personal Training',
-    sub: '3-4 on 1 Coaching',
+    sub: '3-4 on 1 Training',
     details: 'Train in a small group of 3-4 with a coach. Get personal attention with group motivation. Cost-effective & result-driven.',
     prices: {
       '1 Month': { value: 5999 },
@@ -128,7 +128,7 @@ const rateCardData = [
   {
     id: 'sc-4',
     name: 'HYROX Training – Semi Personal',
-    sub: '3-4 on 1 Coaching',
+    sub: '3-4 on 1 Training',
     details: 'Small group training specifically focusing on HYROX race segments, endurance limits, and workout stations, with groups of 3-4 athletes.',
     prices: {
       '1 Month': { value: 5999 },
@@ -439,7 +439,7 @@ function App() {
   }
 
   const galleryImages = [
-    { url: gallery1Img, category: 'training', title: 'Strength Coaching & Olympic Lifts' },
+    { url: gallery1Img, category: 'training', title: 'Strength Training & Olympic Lifts' },
     { url: gallery2Img, category: 'facility', title: 'Premium Free-Weight Dumbbell Station' },
     { url: gallery3Img, category: 'facility', title: 'Unified S&C Turf & Physical Therapy Floor' },
     { url: gallery4Img, category: 'facility', title: 'Functional Pull-Up Rig & Kettlebell Zone' },
@@ -586,7 +586,7 @@ function App() {
             <div className="highlight-content reveal">
               <div className="badge-pill">Sports Rehab & S&C</div>
               <h3>Physio + Fitness + Rehab Under One Roof</h3>
-              <p>At Vertex Performance, we deliver specialized physiotherapy, movement recovery, and high-performance athletic strength coaching. Our unified facility ensures your physical rehabilitation transitions seamlessly into strength-building, overseen by expert coaches and certified physiotherapists.</p>
+              <p>At Vertex Performance, we deliver specialized physiotherapy, movement recovery, and high-performance athletic strength training. Our unified facility ensures your physical rehabilitation transitions seamlessly into strength-building, overseen by expert trainers and certified physiotherapists.</p>
               <ul className="highlight-checklist">
                 <li><div className="check-icon"><Check size={16} /></div><span><strong>Expert Coaches & Physiotherapists:</strong> Working collaboratively to optimize recovery and strength limits.</span></li>
                 <li><div className="check-icon"><Check size={16} /></div><span><strong>Customized Performance Programming:</strong> Every block matches your specific joints, goals, and mobility screens.</span></li>
@@ -659,7 +659,7 @@ function App() {
         <div className="container">
           <div className="section-header text-center reveal">
             <h2 className="text-gradient">OUR APPROACH</h2>
-            <p className="section-subtitle">Toggle between our coaching and therapy disciplines to see how we build robust movement capacity.</p>
+            <p className="section-subtitle">Toggle between our training and therapy disciplines to see how we build robust movement capacity.</p>
             <div className="toggle-tab-container">
               <button onClick={() => setActiveServicesTab('fitness')} className={`toggle-tab-btn ${activeServicesTab === 'fitness' ? 'active' : ''}`}>Fitness & Performance</button>
               <button onClick={() => setActiveServicesTab('physio')} className={`toggle-tab-btn ${activeServicesTab === 'physio' ? 'active' : ''}`}>Physio & Rehab</button>
@@ -797,14 +797,14 @@ function App() {
         <div className="container">
           <div className="section-header text-center reveal">
             <h2 className="text-gradient">HOW WE HELP</h2>
-            <p className="section-subtitle">At Vertex Performance, we deliver private and semi-private gym &amp; fitness sessions for individuals of all age groups. We specialise in physiotherapy, movement recovery, high performance athlete coaching, strength coaching, and Taekwondo training.</p>
+            <p className="section-subtitle">At Vertex Performance, we deliver private and semi-private gym &amp; fitness sessions for individuals of all age groups. We specialise in physiotherapy, movement recovery, high performance athlete training, strength training, and Taekwondo training.</p>
           </div>
           <div className="how-checklist-container grid-2-columns">
             <div className="how-glass-panel glass reveal">
-              <div className="panel-header"><Dumbbell className="text-cyan" size={24} /><h3>Fitness & Strength Coaching</h3></div>
+              <div className="panel-header"><Dumbbell className="text-cyan" size={24} /><h3>Fitness & Strength Training</h3></div>
               <ul className="how-list">
                 <li><div className="check-bullet"><Check size={14} /></div><span>Private & semi-private gym sessions tailored to your goals.</span></li>
-                <li><div className="check-bullet"><Check size={14} /></div><span>Strength coaching for all age groups — beginners to advanced athletes.</span></li>
+                <li><div className="check-bullet"><Check size={14} /></div><span>Strength training for all age groups — beginners to advanced athletes.</span></li>
                 <li><div className="check-bullet"><Check size={14} /></div><span>High performance athlete programming for competitive sport.</span></li>
                 <li><div className="check-bullet"><Check size={14} /></div><span>Taekwondo training for discipline, agility and sport-specific fitness.</span></li>
               </ul>
