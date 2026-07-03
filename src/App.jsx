@@ -627,8 +627,8 @@ function App() {
                 <div className="coach-quote-box glass">
                   <p><em>"Integrating strength and conditioning protocols into combat sports training to build speed, endurance, and competition-ready performance."</em></p>
                 </div>
-                <p>As a national-level athlete, Adeep has represented India on the international stage — including a place on the Indian National Taekwondo Preparatory Team at the Asian Games 2022. His competitive record includes Gold medals at the All India Inter University Championship (2022) and North Zone Inter University Championship (2023), along with numerous podium finishes spanning a decade of competition.</p>
-                <p>Beyond the mat, he has led international training camps in Kochi and Sharjah, and holds certifications from ASCA, Setanta College, the IOC, the University of Colorado Boulder, and the University of Lausanne. At Vertex Performance, he designs structured, science-backed training systems for athletes of all ages.</p>
+                <p>As an international-level athlete, Adeep has represented India on the global stage — including a place on the Indian National Taekwondo Preparatory Team for the Asian Games 2022. His competitive record includes Gold medals at the All India Inter University Championship (2022) and North Zone Inter University Championship (2023), along with numerous podium finishes spanning a decade of competition.</p>
+                <p>Beyond the mat, he has led international training camps in Sharjah, Dubai (UAE), and Kochi, and holds certifications from ASCA, Setanta College, the IOC, the University of Colorado Boulder, and the University of Lausanne. At Vertex Performance, he designs structured, science-backed training systems for athletes of all ages.</p>
               </div>
               <div className="coach-badges">
                 <div className="coach-badge"><span>12+ Years Experience</span></div>
