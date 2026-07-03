@@ -1,9 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useState, useEffect } from 'react'
 import { 
   Dumbbell, 
   Activity, 
@@ -210,128 +205,23 @@ function App() {
   const [bookingStatusMessage, setBookingStatusMessage] = useState('')
   const [bookingEmailSent, setBookingEmailSent] = useState(false)
 
-  // Canvas & GSAP Image Sequence Setup
-  const canvasRef = useRef(null)
-  const foregroundRef = useRef(null)
-  const [imagesLoaded, setImagesLoaded] = useState(false)
-  const frameImages = useRef([])
-  const frameCount = 40
-
-  // Preload frames
+  // Initial Loading Sequence
   useEffect(() => {
-    let loaded = 0;
-    
-    // Fallback: Force clear the loading screen after 4 seconds max
-    const safetyTimer = setTimeout(() => {
-      if (!imagesLoaded) {
-        console.warn("Preloader timed out, forcing load to prevent infinite spin.");
-        setImagesLoaded(true);
-      }
-    }, 4000);
-
-    for (let i = 1; i <= frameCount; i++) {
-      const img = new Image();
-      const num = i.toString().padStart(3, '0');
-      img.src = `/asset/ezgif-frame-${num}.jpg`;
-      
-      const onImageFinish = () => {
-        loaded++;
-        if (loaded === frameCount) {
-          clearTimeout(safetyTimer);
-          setImagesLoaded(true);
-        }
-      };
-
-      img.onload = onImageFinish;
-      img.onerror = () => {
-        console.error(`Failed to load frame ${num}`);
-        onImageFinish(); // Still count as 'finished' so we don't hang
-      };
-      
-      frameImages.current.push(img);
-    }
-    
-    return () => clearTimeout(safetyTimer);
-  }, []);
-
-  // GSAP Canvas Drawing & ScrollTriggers
-  useGSAP(() => {
-    if (!imagesLoaded || !canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-
-    // Set canvas to cover the whole viewport
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const renderFrame = (index) => {
-      const frameIndex = Math.min(Math.max(Math.round(index), 0), frameCount - 1);
-      const img = frameImages.current[frameIndex];
-      if (!img || !img.complete) return;
-      
-      // Object-fit: cover logic
-      const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
-      const x = (canvas.width / 2) - (img.width / 2) * scale;
-      const y = (canvas.height / 2) - (img.height / 2) * scale;
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-    };
-
-    // Render first frame immediately
-    renderFrame(0);
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      renderFrame(sequenceObj.frame);
-    };
-    window.addEventListener('resize', handleResize);
-
-    const sequenceObj = { frame: 0 };
-
-    // --- SCROLL SEQUENCE ANIMATION ---
-    // Pins the hero section so the full 40 frames play within 2 viewport-heights of scrolling.
-    // This makes it fast and punchy.
-    ScrollTrigger.create({
-      trigger: '#home',
-      start: 'top top',
-      end: '+=200%', // 2x viewport height = fast playthrough
-      pin: true,
-      scrub: 0.8,
-      animation: gsap.to(sequenceObj, {
-        frame: frameCount - 1,
-        ease: 'none',
-        onUpdate: () => renderFrame(sequenceObj.frame)
-      })
-    });
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      ScrollTrigger.getAll().forEach(st => st.kill());
-    };
-  }, [imagesLoaded]);
-
-  // Initial Loading Sequence (Now tied to imagesLoaded)
-  useEffect(() => {
-    if (!imagesLoaded) return;
-    
     // 1. Show static pulsing logo for 1.5s
     const scatterTimer = setTimeout(() => {
       setLoadingState('scattering')
-    }, 1000)
+    }, 1500)
     
     // 2. Wait for 1.2s scatter animation to finish before unmounting
     const completeTimer = setTimeout(() => {
       setLoadingState('complete')
-    }, 2200)
+    }, 2700)
 
     return () => {
       clearTimeout(scatterTimer)
       clearTimeout(completeTimer)
     }
-  }, [imagesLoaded])
+  }, [])
 
   // Scroll reveal system
   useEffect(() => {
@@ -595,14 +485,6 @@ function App() {
         </div>
       )}
 
-      {/* 3D Canvas Background Layer */}
-      <div className="canvas-background-layer">
-        <canvas ref={canvasRef} />
-      </div>
-
-      {/* GSAP Foreground Layer Wrapper */}
-      <div ref={foregroundRef} className="foreground-layer">
-
       <div className="floating-orb orb-1" style={{ transform: `translate3d(${-heroTilt.x * 0.5}px, ${-heroTilt.y * 0.5}px, 0)` }}></div>
       <div className="floating-orb orb-2" style={{ transform: `translate3d(${heroTilt.x * 0.3}px, ${heroTilt.y * 0.3}px, 0)` }}></div>
       <div className="floating-orb orb-3" style={{ transform: `translate3d(${-heroTilt.x * 0.2}px, ${-heroTilt.y * 0.2}px, 0)` }}></div>
@@ -662,7 +544,7 @@ function App() {
           </div>
           <div className="hero-image-wrapper animate-hero-image">
             <div className="hero-image-frame" style={{ transform: `perspective(1200px) rotateX(${heroTilt.tiltX}deg) rotateY(${heroTilt.tiltY}deg)`, transformStyle: 'preserve-3d' }}>
-              {/* Static hero gym image removed to reveal 3D canvas sequence behind the parallax cards */}
+              <img src={heroGym} alt="Vertex Performance Premium Facility" className="hero-image" />
               
               {/* Floating 3D Parallax Card 1 */}
               <div className="hero-image-card-parallax-wrapper card-1-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
@@ -1114,8 +996,6 @@ function App() {
           <div className="footer-bottom"><p>&copy; {new Date().getFullYear()} Vertex Performance Centre. All Rights Reserved.</p></div>
         </div>
       </footer>
-
-      </div> {/* End of GSAP Foreground Layer Wrapper */}
 
       <a href="https://wa.me/918488862388" target="_blank" rel="noopener noreferrer" className="floating-whatsapp-bubble animate-bounce" aria-label="Chat on WhatsApp">
         <svg viewBox="0 0 32 32" className="whatsapp-svg-icon" xmlns="http://www.w3.org/2000/svg"><path d="M16 2a14 14 0 0 0-12.1 21L2 29.8l7-1.8A14 14 0 1 0 16 2zm6.9 19.3c-.3.8-1.7 1.6-2.4 1.7-.6.1-1.4.2-4-.8a17.2 17.2 0 0 1-7-6.2c-.9-1.2-1.5-2.6-1.5-4 0-2.4 1.2-3.6 1.7-4.1.4-.4.8-.5 1-.5h.8c.2 0 .5 0 .7.5.3.6.9 2.2 1 2.4.1.2.1.4 0 .6l-.5.8c-.1.2-.3.4-.5.5s-.3.3-.1.7a9.3 9.3 0 0 0 3.4 4.3 8.3 8.3 0 0 0 4.2 1.6c.4 0 .7-.2 1-.4l.6-.7c.3-.3.5-.3.8-.2s1.7.8 2 1c.3.1.5.3.6.4s.2.7-.1 1.5z" fill="#FFF"/></svg>

@@ -2,40 +2,15 @@
    EXTRAORDINARY MESH & BLUEPRINT GRID BODY BACKGROUND
    ========================================== */
 body {
-  background-color: #F0F4F8;
-  background-image: none !important;
-}
-
-/* ==========================================
-   GSAP CANVAS & FOREGROUND LAYERS
-   ========================================== */
-.canvas-background-layer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 55vw;        /* Right-side panel - visible in hero */
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-  background: #c8d6e5; /* Light silver-blue to match hero light bg */
-  overflow: hidden;
-  border-radius: 0 0 0 40px;
-  box-shadow: -20px 0 60px rgba(0, 63, 135, 0.12);
-  transition: background 0.5s ease;
-}
-
-.canvas-background-layer canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-.foreground-layer {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  background-color: transparent; 
+  background-color: #EDF1F5 !important;
+  background-image: 
+    radial-gradient(at 5% 5%, rgba(0, 174, 239, 0.08) 0, transparent 40%),
+    radial-gradient(at 95% 5%, rgba(0, 63, 135, 0.06) 0, transparent 40%),
+    radial-gradient(at 50% 95%, rgba(0, 174, 239, 0.08) 0, transparent 40%),
+    linear-gradient(rgba(0, 174, 239, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 174, 239, 0.015) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px !important;
+  background-attachment: fixed !important;
 }
 
 /* ==========================================
@@ -106,7 +81,7 @@ body {
   left: 0;
   width: 100%;
   height: var(--header-height);
-  z-index: 200;
+  z-index: 100;
   display: flex;
   align-items: center;
   transition: var(--transition-smooth);
@@ -264,10 +239,11 @@ body {
    ========================================== */
 .hero-section {
   padding-top: calc(var(--header-height) + 40px);
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
-  background: transparent;
+  background: radial-gradient(circle at 80% 20%, rgba(0, 174, 239, 0.04) 0%, transparent 50%),
+              radial-gradient(circle at 10% 80%, rgba(0, 63, 135, 0.03) 0%, transparent 50%);
 }
 
 .hero-grid {
@@ -364,7 +340,7 @@ body {
   margin-top: 4px;
 }
 
-/* Hero Image Frame & Cards — The frame is now transparent to show the canvas */
+/* Hero Image Frame & Cards */
 .hero-image-wrapper {
   position: relative;
   z-index: 2;
@@ -374,8 +350,8 @@ body {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: visible;
-  /* No border or shadow since the canvas IS the visual */
-  min-height: 400px;
+  box-shadow: var(--shadow-xl);
+  border: 4px solid #FFFFFF;
 }
 
 .hero-image {
@@ -533,7 +509,7 @@ body {
    HIGHLIGHTS (S&C FOCUS)
    ========================================== */
 .highlights-section {
-  background-color: transparent;
+  background-color: var(--bg-card);
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -620,7 +596,7 @@ body {
    ========================================== */
 .coach-section {
   padding: 120px 0;
-  background-color: transparent; /* Reverted to light theme */
+  background-color: var(--bg-body); /* Reverted to light theme */
   position: relative;
 }
 
@@ -820,7 +796,7 @@ body {
    SERVICES SECTION
    ========================================== */
 .services-section {
-  background-color: transparent;
+  background-color: var(--bg-body);
 }
 
 .services-bg-glow {
@@ -953,7 +929,7 @@ body {
    SCHEDULE SECTION
    ========================================== */
 .schedule-section {
-  background-color: transparent;
+  background-color: var(--bg-card);
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -1111,7 +1087,7 @@ body {
    VERTEX GOAL MATCH SYSTEM
    ========================================== */
 .calculator-section {
-  background-color: transparent;
+  background-color: var(--bg-body);
 }
 
 .calculator-bg-lines {
@@ -1354,7 +1330,7 @@ body {
    PRICING / MEMBERSHIPS
    ========================================== */
 .pricing-section {
-  background-color: transparent;
+  background-color: var(--bg-card);
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -1593,7 +1569,7 @@ body {
    CONTACT SECTION
    ========================================== */
 .contact-section {
-  background-color: transparent;
+  background-color: var(--bg-body);
 }
 
 .contact-info-block {
@@ -2029,7 +2005,7 @@ body {
 
 /* Programs Cards Layout */
 .programs-section {
-  background-color: transparent;
+  background-color: var(--bg-body);
   padding: 100px 24px;
   position: relative;
 }
@@ -2124,7 +2100,7 @@ body {
 
 /* Who We Help Cards */
 .who-we-help-section {
-  background-color: transparent;
+  background-color: var(--bg-card);
   padding: 100px 24px;
 }
 
@@ -2226,7 +2202,7 @@ body {
    RATE CARD INTERACTIVE PRICING TABLE STYLES
    ========================================== */
 .rate-card-section {
-  background-color: transparent;
+  background-color: var(--bg-card);
   padding: 100px 24px;
   position: relative;
 }
@@ -2686,7 +2662,7 @@ body {
    GALLERY MASONRY STYLES
    ========================================== */
 .gallery-section {
-  background-color: transparent;
+  background-color: var(--bg-body);
   padding: 100px 24px;
 }
 
