@@ -262,7 +262,7 @@ function App() {
     const ctx = canvas.getContext('2d');
 
     const renderFrame = (index) => {
-      const img = frameImages.current[index];
+      const img = frameImages.current[Math.round(index)];
       if (!img) return;
       
       // Object-fit: cover logic
