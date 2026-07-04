@@ -464,19 +464,48 @@ function App() {
       {loadingState !== 'complete' && (
         <div className={`global-loader ${loadingState === 'scattering' ? 'cinematic-fade' : ''}`}>
           <div className="loader-background-mesh"></div>
+          <div className="loader-background-overlay"></div>
+          
+          {/* Light Streaks */}
+          <div className="light-streak streak-1"></div>
+          <div className="light-streak streak-2"></div>
+          <div className="light-streak streak-3"></div>
+          
+          {/* Bokeh Orbs */}
+          <div className="bokeh-orb bokeh-1"></div>
+          <div className="bokeh-orb bokeh-2"></div>
+          <div className="bokeh-orb bokeh-3"></div>
+          <div className="bokeh-orb bokeh-4"></div>
+          
+          {/* Floating Particles */}
           <div className="floating-particle particle-1"></div>
           <div className="floating-particle particle-2"></div>
           <div className="floating-particle particle-3"></div>
           <div className="floating-particle particle-4"></div>
           <div className="floating-particle particle-5"></div>
+          
           <div className="cinematic-loader-container">
-            <img src={logoFull} alt="Vertex Performance Logo" className={`loader-logo ${loadingState === 'loading' ? 'loader-pulse' : 'fade-out'}`} />
-            {loadingState === 'scattering' && (
-              <>
-                <div className="fade-glow fade-glow-1"></div>
-                <div className="fade-glow fade-glow-2"></div>
-              </>
-            )}
+            <div className="loader-content">
+              <img src={logoFull} alt="Vertex Performance Logo" className={`loader-logo ${loadingState === 'loading' ? 'loader-pulse' : 'dissolve-out'}`} />
+              
+              {loadingState === 'scattering' && (
+                <>
+                  <div className="dissolve-particle particle-dissolve-1"></div>
+                  <div className="dissolve-particle particle-dissolve-2"></div>
+                  <div className="dissolve-particle particle-dissolve-3"></div>
+                  <div className="dissolve-particle particle-dissolve-4"></div>
+                  <div className="dissolve-particle particle-dissolve-5"></div>
+                  <div className="dissolve-particle particle-dissolve-6"></div>
+                  <div className="dissolve-particle particle-dissolve-7"></div>
+                  <div className="dissolve-particle particle-dissolve-8"></div>
+                  
+                  <div className="fade-glow fade-glow-1"></div>
+                  <div className="fade-glow fade-glow-2"></div>
+                  
+                  <div className="tagline-text">UNLEASH YOUR POTENTIAL</div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
