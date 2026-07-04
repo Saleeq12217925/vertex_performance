@@ -409,13 +409,23 @@ body {
   transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.card-1-wrapper {
+.card-tkd-wrapper {
+  top: 30px;
+  left: -20px;
+}
+
+.card-sc-wrapper {
+  top: 30px;
+  right: -20px;
+}
+
+.card-turf-wrapper {
   bottom: 30px;
   left: -20px;
 }
 
-.card-2-wrapper {
-  top: 30px;
+.card-physio-wrapper {
+  bottom: 30px;
   right: -20px;
 }
 
@@ -3749,11 +3759,7 @@ img {
     max-width: 100%;
   }
 
-  .card-1-wrapper,
-  .card-2-wrapper {
-    position: static;
-    margin-top: 12px;
-  }
+
 
   .section-header {
     margin-bottom: 40px;

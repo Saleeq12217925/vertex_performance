@@ -53,6 +53,28 @@ import gallery3Img from './assets/gallery_3.jpg'
 import gallery4Img from './assets/gallery_4.jpg'
 import gallery5Img from './assets/gallery_5.jpg'
 
+// New Gallery subdirectory imports
+import galNew10_2 from './assets/gallery/10-2.jpg'
+import galNew11_2 from './assets/gallery/11-2.jpg'
+import galNew12_2 from './assets/gallery/12-2.jpg'
+import galNew16_2 from './assets/gallery/16-2.jpg'
+import galNew2_2 from './assets/gallery/2-2.jpg'
+import galNew3_2 from './assets/gallery/3-2.jpg'
+import galNew4_2 from './assets/gallery/4-2.jpg'
+import galNew5_2 from './assets/gallery/5-2.jpg'
+import galNew6_2 from './assets/gallery/6-2.jpg'
+import galNew7_2 from './assets/gallery/7-2.jpg'
+import galNew8_2 from './assets/gallery/8-2.jpg'
+import galNewDSC07834 from './assets/gallery/DSC07834.jpg'
+import galNewDSC07838 from './assets/gallery/DSC07838.jpg'
+import galNewDSC07840 from './assets/gallery/DSC07840.jpg'
+import galNewDSC07850 from './assets/gallery/DSC07850.jpg'
+import galNewDSC07851 from './assets/gallery/DSC07851.jpg'
+import galNewDSC07853 from './assets/gallery/DSC07853.jpg'
+import galNewDSC07856 from './assets/gallery/DSC07856.jpg'
+import galNewDSC07862 from './assets/gallery/DSC07862.jpg'
+import galNewDSC07880 from './assets/gallery/DSC07880.jpg'
+
 // JSON Content Tables for all sections
 const servicesData = {
   fitness: [
@@ -408,7 +430,31 @@ function App() {
     { url: gallery2Img, category: 'facility', title: 'Premium Free-Weight Dumbbell Station' },
     { url: gallery3Img, category: 'facility', title: 'Unified S&C Turf & Physical Therapy Floor' },
     { url: gallery4Img, category: 'facility', title: 'Functional Pull-Up Rig & Kettlebell Zone' },
-    { url: gallery5Img, category: 'training', title: 'Athletic Motivation Wall & Powerlifting Rack' }
+    { url: gallery5Img, category: 'training', title: 'Athletic Motivation Wall & Powerlifting Rack' },
+    
+    // New training photos
+    { url: galNew10_2, category: 'training', title: 'Olympic Rack & Lateral Raise Training' },
+    { url: galNew11_2, category: 'training', title: 'Barbell Deadlift Training' },
+    { url: galNew12_2, category: 'training', title: 'Cardio & Treadmill Conditioning' },
+    { url: galNew16_2, category: 'training', title: 'Dumbbell Lunge Conditioning' },
+    { url: galNew3_2, category: 'training', title: 'Bicep Flexion & Arm Strength' },
+    { url: galNew4_2, category: 'training', title: 'Upper Body Cable Conditioning' },
+    { url: galNew5_2, category: 'training', title: 'Kettlebell Goblet Lunges' },
+    { url: galNew6_2, category: 'training', title: 'Rig Pull-up Conditioning' },
+    { url: galNew7_2, category: 'training', title: 'Cable Crossover Chest Fly' },
+    { url: galNew8_2, category: 'training', title: 'Barbell Squat Setup' },
+    
+    // New facility photos
+    { url: galNew2_2, category: 'facility', title: 'Olympic Weight Plate Station' },
+    { url: galNewDSC07834, category: 'facility', title: 'Premium Lounge & Refreshment Bar' },
+    { url: galNewDSC07838, category: 'facility', title: 'Vanity & Washroom Area' },
+    { url: galNewDSC07840, category: 'facility', title: 'Physiotherapy & Treatment Suite' },
+    { url: galNewDSC07850, category: 'facility', title: 'Pro Hex Dumbbell Station' },
+    { url: galNewDSC07851, category: 'facility', title: 'Competition Kettlebell Rack' },
+    { url: galNewDSC07853, category: 'facility', title: 'S&C Open Gym Floor' },
+    { url: galNewDSC07856, category: 'facility', title: 'Modern Training Zone & Racks' },
+    { url: galNewDSC07862, category: 'facility', title: 'Consultation & Assessment Desk' },
+    { url: galNewDSC07880, category: 'facility', title: 'Olympic Barbell Storage & Squat Rack' }
   ];
 
   const filteredGallery = galleryFilter === 'all' ? galleryImages : galleryImages.filter(img => img.category === galleryFilter);
@@ -509,21 +555,40 @@ function App() {
           </div>
           <div className="hero-image-wrapper animate-hero-image">
             <div className="hero-image-frame" style={{ transform: `perspective(1200px) rotateX(${heroTilt.tiltX}deg) rotateY(${heroTilt.tiltY}deg)`, transformStyle: 'preserve-3d' }}>
-              <img src={heroGym} alt="Vertex Performance Premium Facility" className="hero-image" />
+              <img src={galNewDSC07853} alt="Vertex Performance Premium Facility" className="hero-image" />
               
-              {/* Floating 3D Parallax Card 1 */}
-              <div className="hero-image-card-parallax-wrapper card-1-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
+              {/* Floating 3D Parallax Card 1: Taekwondo (Top Left) */}
+              <div className="hero-image-card-parallax-wrapper card-tkd-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
                 <div className="hero-image-card">
-                  <div className="card-icon"><Dumbbell size={18} className="text-white" /></div>
+                  <div className="card-icon"><Award size={18} className="text-white" /></div>
                   <div>
-                    <h4>Elite S&C Turf</h4>
-                    <p>S&C Training</p>
+                    <h4>Taekwondo</h4>
                   </div>
                 </div>
               </div>
 
-              {/* Floating 3D Parallax Card 2 */}
-              <div className="hero-image-card-parallax-wrapper card-2-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
+              {/* Floating 3D Parallax Card 2: Strength and Conditioning (Top Right) */}
+              <div className="hero-image-card-parallax-wrapper card-sc-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
+                <div className="hero-image-card">
+                  <div className="card-icon"><Dumbbell size={18} className="text-white" /></div>
+                  <div>
+                    <h4>Strength & Conditioning</h4>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating 3D Parallax Card 3: Elite Turf & Premium Equipment (Bottom Left) */}
+              <div className="hero-image-card-parallax-wrapper card-turf-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
+                <div className="hero-image-card">
+                  <div className="card-icon"><Sparkles size={18} className="text-white" /></div>
+                  <div>
+                    <h4>Elite Turf and Premium Equipments</h4>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating 3D Parallax Card 4: Sports Physio (Bottom Right) */}
+              <div className="hero-image-card-parallax-wrapper card-physio-wrapper" style={{ transform: 'translateZ(50px) scale(0.95)' }}>
                 <div className="hero-image-card">
                   <div className="card-icon rehab"><Activity size={18} className="text-white" /></div>
                   <div>
@@ -559,7 +624,7 @@ function App() {
               </ul>
             </div>
             <div className="highlight-image-container reveal" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
-              <img src={gallery3Img} alt="Vertex Performance S&C Gym Floor" className="highlight-img" style={{ transition: 'transform 0.15s ease' }} />
+              <img src={galNew11_2} alt="Vertex Performance Barbell Deadlift Training" className="highlight-img" style={{ transition: 'transform 0.15s ease' }} />
               <div className="highlight-overlay-glow"></div>
             </div>
           </div>
