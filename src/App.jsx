@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Dumbbell, 
   Activity, 
@@ -173,6 +174,37 @@ const rateCardData = [
   }
 ];
 
+// Dynamically import all 29 coach images
+const rawCoachImages = import.meta.glob('./assets/coach/*.jpeg', { eager: true, import: 'default' });
+const coachImagesList = Object.values(rawCoachImages);
+
+// Specific rotations needed for incorrectly oriented photos
+const imageRotations = {
+  [coachImagesList[12]]: -90,
+  [coachImagesList[13]]: -90,
+  [coachImagesList[14]]: -90,
+  [coachImagesList[15]]: -90,
+  [coachImagesList[17]]: -90,
+};
+
+// Map the images to categories
+const coachGalleries = {
+  'experience': [...coachImagesList.slice(0, 7), coachImagesList[7]],
+  'certifications': [
+    ...coachImagesList.slice(8, 14),
+    coachImagesList[14],
+    coachImagesList[15],
+    coachImagesList[16],
+    coachImagesList[17]
+  ],
+  'belt': [
+    coachImagesList[18],
+    coachImagesList[19],
+    coachImagesList[20]
+  ],
+  'medalist': coachImagesList.slice(21, 29)
+};
+
 function App() {
   // Obtain your free access key by typing your email at https://web3forms.com/
   // Key is stored in .env file to keep it hidden from GitHub
@@ -211,6 +243,10 @@ function App() {
   
   // Booking Modal State
   const [bookingModalOpen, setBookingModalOpen] = useState(false)
+
+  // Coach Photo Gallery State
+  const [activeCoachGallery, setActiveCoachGallery] = useState(null)
+  const [selectedCoachImage, setSelectedCoachImage] = useState(null)
 
   const [bookingForm, setBookingForm] = useState({
     name: '',
@@ -638,7 +674,7 @@ function App() {
               </ul>
             </div>
             <div className="highlight-image-container reveal" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
-              <img src={galNew11_2} alt="Vertex Performance Barbell Deadlift Training" className="highlight-img" style={{ transition: 'transform 0.15s ease' }} />
+              <img src={gallery1Img} alt="Vertex Performance Barbell Deadlift Training" className="highlight-img" style={{ transition: 'transform 0.15s ease' }} />
               <div className="highlight-overlay-glow"></div>
             </div>
           </div>
@@ -683,10 +719,10 @@ function App() {
               </div>
 
               <div className="bento-box glass badges-bento">
-                <div className="coach-badge"><span>12+ Years Experience</span></div>
-                <div className="coach-badge"><span>2nd Dan Black Belt</span></div>
-                <div className="coach-badge"><span>Asian Games 2022</span></div>
-                <div className="coach-badge"><span>6+ Certifications</span></div>
+                <div className="coach-badge cursor-pointer hover:scale-105 transition-transform" onClick={() => setActiveCoachGallery('experience')}><span>12+ Years Experience</span></div>
+                <div className="coach-badge cursor-pointer hover:scale-105 transition-transform" onClick={() => setActiveCoachGallery('certifications')}><span>6+ Certifications</span></div>
+                <div className="coach-badge cursor-pointer hover:scale-105 transition-transform" onClick={() => setActiveCoachGallery('belt')}><span>2nd Dan Black Belt</span></div>
+                <div className="coach-badge cursor-pointer hover:scale-105 transition-transform" onClick={() => setActiveCoachGallery('medalist')}><span>All India University Gold Medalist</span></div>
               </div>
             </div>
             
@@ -1006,9 +1042,15 @@ function App() {
             </div>
             <a href="https://www.instagram.com/vertex_performance_/" target="_blank" rel="noopener noreferrer" className="contact-card instagram-card glass" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
               <div className="card-icon"><InstagramIcon /></div>
-              <h3>Instagram Handles</h3>
+              <h3>Instagram</h3>
               <p>Follow @vertex_performance_ for biomechanical reels, client lifting metrics, and schedules.</p>
               <span className="contact-action-link">Follow @vertex_performance_ →</span>
+            </a>
+            <a href="https://www.facebook.com/people/Vertex-Performance/61591537682113/" target="_blank" rel="noopener noreferrer" className="contact-card facebook-card glass" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
+              <div className="card-icon"><FacebookIcon /></div>
+              <h3>Facebook</h3>
+              <p>Connect with Vertex Performance on Facebook for community updates and event announcements.</p>
+              <span className="contact-action-link">Visit our Page →</span>
             </a>
           </div>
           <div className="map-address-block glass reveal mt-5">
@@ -1029,7 +1071,7 @@ function App() {
             <div className="footer-brand">
               <div className="footer-logo-wrapper mb-3"><img src={logoWhite} alt="Vertex Performance Logo" className="logo-img-full footer-logo-img" /></div>
               <p className="mb-4">Discover science-backed S&C programming tailored to unlock physical resilience, bridging athletic excellence with professional physiotherapy.</p>
-              <div className="footer-socials"><a href="https://www.instagram.com/vertex_performance_/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram"><InstagramIcon /></a><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Facebook"><FacebookIcon /></a><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn"><LinkedinIcon /></a></div>
+              <div className="footer-socials"><a href="https://www.instagram.com/vertex_performance_/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram"><InstagramIcon /></a><a href="https://www.facebook.com/people/Vertex-Performance/61591537682113/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Facebook"><FacebookIcon /></a><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn"><LinkedinIcon /></a></div>
             </div>
             <div className="footer-links-grid">
               <div><h4>Company</h4><ul className="footer-links"><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#programs">Programs</a></li><li><a href="#who-we-help">Who We Help</a></li></ul></div>
@@ -1064,6 +1106,73 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* Coach Photo Gallery Modal */}
+      <AnimatePresence>
+        {activeCoachGallery && coachGalleries[activeCoachGallery] && (
+          <motion.div 
+            className="coach-gallery-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveCoachGallery(null)}
+          >
+            <motion.div 
+              className="coach-gallery-modal glass"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="modal-close-btn" onClick={() => setActiveCoachGallery(null)}><X size={24} /></button>
+              <h3 className="gallery-title">
+                {activeCoachGallery === 'experience' && '12+ Years Experience'}
+                {activeCoachGallery === 'certifications' && '6+ Certifications'}
+                {activeCoachGallery === 'belt' && '2nd Dan Black Belt'}
+                {activeCoachGallery === 'medalist' && 'All India University Gold Medalist'}
+              </h3>
+              <div className="coach-gallery-grid">
+                {coachGalleries[activeCoachGallery].map((imgUrl, idx) => (
+                  <motion.div 
+                    key={idx} 
+                    className="coach-gallery-item cursor-pointer"
+                    onClick={() => setSelectedCoachImage(imgUrl)}
+                    initial={{ opacity: 0, scale: 0.8, rotate: imageRotations[imgUrl] || 0 }}
+                    animate={{ opacity: 1, scale: 1, rotate: imageRotations[imgUrl] || 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                  >
+                    <img src={imgUrl} alt={`Gallery item ${idx + 1}`} loading="lazy" />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Full Screen Image Lightbox */}
+      <AnimatePresence>
+        {selectedCoachImage && (
+          <motion.div 
+            className="full-image-lightbox-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedCoachImage(null)}
+          >
+            <button className="lightbox-close-btn" onClick={() => setSelectedCoachImage(null)}><X size={32} /></button>
+            <motion.img 
+              src={selectedCoachImage} 
+              alt="Full view" 
+              className="full-image-lightbox-img"
+              initial={{ scale: 0.8, opacity: 0, rotate: imageRotations[selectedCoachImage] || 0 }}
+              animate={{ scale: 1, opacity: 1, rotate: imageRotations[selectedCoachImage] || 0 }}
+              exit={{ scale: 0.8, opacity: 0, rotate: imageRotations[selectedCoachImage] || 0 }}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }
