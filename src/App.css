@@ -28,9 +28,117 @@ body {
   overflow: hidden;
 }
 
-.global-loader.scattering {
+.global-loader.cinematic-fade {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Animated Gradient Mesh Background */
+.loader-background-mesh {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, rgba(0, 174, 239, 0.1) 25%, var(--bg-dark) 50%, rgba(0, 63, 135, 0.1) 75%, var(--bg-dark) 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Floating Particles */
+.floating-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 174, 239, 0.4) 0%, transparent 70%);
+  filter: blur(1px);
+  z-index: 2;
+}
+
+.particle-1 {
+  width: 120px;
+  height: 120px;
+  top: 15%;
+  left: 10%;
+  animation: float 12s ease-in-out infinite;
+}
+
+.particle-2 {
+  width: 80px;
+  height: 80px;
+  top: 60%;
+  right: 15%;
+  background: radial-gradient(circle, rgba(0, 63, 135, 0.3) 0%, transparent 70%);
+  animation: float 14s ease-in-out infinite reverse;
+  animation-delay: 2s;
+}
+
+.particle-3 {
+  width: 100px;
+  height: 100px;
+  top: 30%;
+  right: 20%;
+  background: radial-gradient(circle, rgba(0, 174, 239, 0.3) 0%, transparent 70%);
+  animation: float 16s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+.particle-4 {
+  width: 90px;
+  height: 90px;
+  bottom: 20%;
+  left: 15%;
+  background: radial-gradient(circle, rgba(0, 63, 135, 0.25) 0%, transparent 70%);
+  animation: float 13s ease-in-out infinite reverse;
+  animation-delay: 3s;
+}
+
+.particle-5 {
+  width: 70px;
+  height: 70px;
+  top: 70%;
+  left: 50%;
+  background: radial-gradient(circle, rgba(0, 174, 239, 0.35) 0%, transparent 70%);
+  animation: float 15s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-30px) translateX(20px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-60px) translateX(-20px);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-30px) translateX(30px);
+    opacity: 0.5;
+  }
+}
+
+.cinematic-loader-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
 }
 
 .loader-logo {
@@ -38,37 +146,63 @@ body {
   height: 90px;
   object-fit: contain;
   animation: loader-pulse 1.5s ease-in-out infinite alternate;
+  transition: opacity 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.loader-logo.fade-out {
+  animation: none;
+  opacity: 0;
+  transform: scale(0.85) translateY(-20px);
+  filter: blur(8px) drop-shadow(0 0 30px rgba(0, 174, 239, 0.8));
 }
 
 @keyframes loader-pulse {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 15px rgba(0, 174, 239, 0.5)); }
+  0% { 
+    transform: scale(0.95); 
+    opacity: 0.8;
+    filter: drop-shadow(0 0 8px rgba(0, 174, 239, 0.3));
+  }
+  100% { 
+    transform: scale(1.05); 
+    opacity: 1; 
+    filter: drop-shadow(0 0 20px rgba(0, 174, 239, 0.7));
+  }
 }
 
-.scatter-grid {
-  position: relative;
-  width: 240px;
-  height: 90px;
-}
-
-.scatter-piece {
+.fade-glow {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  background-size: 240px 90px;
-  background-repeat: no-repeat;
-  animation: scatter-explode 1.2s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
-  animation-delay: var(--delay);
+  border-radius: 50%;
+  animation: glow-fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  pointer-events: none;
 }
 
-@keyframes scatter-explode {
+.fade-glow-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 174, 239, 0.6) 0%, transparent 70%);
+  animation-delay: 0.2s;
+}
+
+.fade-glow-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 63, 135, 0.4) 0%, transparent 70%);
+  animation-delay: 0.4s;
+}
+
+@keyframes glow-fade {
   0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
     opacity: 1;
   }
   100% {
-    transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.5);
     opacity: 0;
+    transform: scale(2);
   }
 }
 

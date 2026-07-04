@@ -462,37 +462,22 @@ function App() {
   return (
     <>
       {loadingState !== 'complete' && (
-        <div className={`global-loader ${loadingState === 'scattering' ? 'scattering' : ''}`}>
-          {loadingState === 'loading' ? (
-            <img src={logoFull} alt="Vertex Performance Logo" className="loader-logo loader-pulse" />
-          ) : (
-            <div className="scatter-grid">
-              {Array.from({ length: 24 }).map((_, i) => {
-                const row = Math.floor(i / 8);
-                const col = i % 8;
-                const tx = (col - 3.5) * 60 + (Math.random() * 120 - 60);
-                const ty = (row - 1) * 60 + (Math.random() * 120 - 60);
-                const rot = Math.random() * 180 - 90;
-                const delay = Math.random() * 0.2;
-                return (
-                  <div 
-                    key={i} 
-                    className="scatter-piece" 
-                    style={{
-                      left: `${col * 30}px`,
-                      top: `${row * 30}px`,
-                      backgroundImage: `url(${logoFull})`,
-                      backgroundPosition: `${(col / 7) * 100}% ${(row / 2) * 100}%`,
-                      '--tx': `${tx}px`,
-                      '--ty': `${ty}px`,
-                      '--rot': `${rot}deg`,
-                      '--delay': `${delay}s`
-                    }}
-                  />
-                );
-              })}
-            </div>
-          )}
+        <div className={`global-loader ${loadingState === 'scattering' ? 'cinematic-fade' : ''}`}>
+          <div className="loader-background-mesh"></div>
+          <div className="floating-particle particle-1"></div>
+          <div className="floating-particle particle-2"></div>
+          <div className="floating-particle particle-3"></div>
+          <div className="floating-particle particle-4"></div>
+          <div className="floating-particle particle-5"></div>
+          <div className="cinematic-loader-container">
+            <img src={logoFull} alt="Vertex Performance Logo" className={`loader-logo ${loadingState === 'loading' ? 'loader-pulse' : 'fade-out'}`} />
+            {loadingState === 'scattering' && (
+              <>
+                <div className="fade-glow fade-glow-1"></div>
+                <div className="fade-glow fade-glow-2"></div>
+              </>
+            )}
+          </div>
         </div>
       )}
 
