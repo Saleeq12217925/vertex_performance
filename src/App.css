@@ -1100,7 +1100,7 @@ body {
 
 .coach-huge-name {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
   line-height: 1.1;
   margin-bottom: 8px;
   letter-spacing: -0.02em;
