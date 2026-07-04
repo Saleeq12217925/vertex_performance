@@ -3460,12 +3460,20 @@ body {
 }
 
 /* Footer full logo blend styling */
+.footer-logo-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .footer-logo-img {
-  height: 65px !important;
-  width: auto !important;
+  width: 170px !important;
+  height: auto !important;
   transform: scale(1) !important;
-  filter: invert(1) brightness(1.2) contrast(1.1) !important;
-  mix-blend-mode: screen !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
 /* Enable 3D Parallax perspective for Service, Program, Who, and Standalone Cards */

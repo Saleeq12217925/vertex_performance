@@ -44,6 +44,7 @@ import rateCard2 from './assets/rate_card_2.jpg'
 import servicesTabImg from './assets/services_tab.jpg'
 import navStrip from './assets/nav_strip.png'
 import coachImg from './assets/final_navy.png'
+import logoWhite from './assets/logo_white.jpg'
 
 // New Gallery Image Imports
 import gallery1Img from './assets/gallery_1.jpg'
@@ -51,7 +52,6 @@ import gallery2Img from './assets/gallery_2.jpg'
 import gallery3Img from './assets/gallery_3.jpg'
 import gallery4Img from './assets/gallery_4.jpg'
 import gallery5Img from './assets/gallery_5.jpg'
-import upiQr from './assets/upi_qr.jpg'
 
 // JSON Content Tables for all sections
 const servicesData = {
@@ -155,7 +155,7 @@ function App() {
   // Obtain your free access key by typing your email at https://web3forms.com/
   // Key is stored in .env file to keep it hidden from GitHub
   const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
-  const UPI_ID = "vertex@oksbi";
+
 
   // Loading State Flow: 'loading' -> 'scattering' -> 'complete'
   const [loadingState, setLoadingState] = useState('loading')
@@ -189,7 +189,7 @@ function App() {
   
   // Booking Modal State
   const [bookingModalOpen, setBookingModalOpen] = useState(false)
-  const [bookingStep, setBookingStep] = useState(1) // 1 = Details form, 2 = UPI checkout
+
   const [bookingForm, setBookingForm] = useState({
     name: '',
     age: '',
@@ -314,14 +314,11 @@ function App() {
       plan: durationText,
       price: priceText
     }))
-    setBookingStep(1)
     setBookingModalOpen(true)
     setBookingConfirmed(false)
     setBookingEmailSent(false)
     setBookingStatusMessage('')
   }
-
-  const bookingNeedsQrStep = bookingForm.program === 'Taekwondo Training' || bookingForm.program.includes('Demo')
 
   // WhatsApp click-to-chat redirect builder
   const handleBookingSubmit = (e) => {
@@ -339,7 +336,7 @@ function App() {
     }
 
     setBookingEmailSent(false)
-    setBookingStatusMessage("Sending enquiry details. Check your email in a few minutes for confirmation.")
+    setBookingStatusMessage("Sending enquiry details...")
 
     // Send form details automatically to the owner's email in the background (using Web3Forms free tier)
     const formData = new FormData();
@@ -366,36 +363,24 @@ function App() {
       enquiryDetails.push(`Price: ${bookingForm.price}`);
     }
     formData.append("message", enquiryDetails.join('\n'));
-    
-    if (bookingNeedsQrStep) {
-      setBookingStep(2)
-    }
 
+    // Trigger the background fetch with keepalive: true to ensure it finishes even after redirecting
     fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      body: formData
+      body: formData,
+      keepalive: true
     })
     .then(res => res.json())
     .then(data => {
       console.log("Booking details sent automatically to email:", data);
-      if (data.success) {
-        setBookingEmailSent(true)
-        setBookingStatusMessage("Email enquiry sent successfully. Check your inbox or spam folder for confirmation.")
-      } else {
-        setBookingEmailSent(false)
-        setBookingStatusMessage("Enquiry submitted. Email confirmation may take a few minutes.")
-      }
     })
     .catch(err => {
       console.error("Error sending booking details automatically:", err);
-      setBookingEmailSent(false)
-      setBookingStatusMessage("Unable to send email confirmation automatically right now. Please continue on WhatsApp or retry.")
     });
 
-    if (!bookingNeedsQrStep) {
-      executeWhatsAppRedirect()
-      setBookingModalOpen(false)
-    }
+    // Immediately open WhatsApp redirect and close modal synchronously (prevents browser popup block)
+    executeWhatsAppRedirect()
+    setBookingModalOpen(false)
   }
 
   const executeWhatsAppRedirect = () => {
@@ -403,26 +388,6 @@ function App() {
     const greeting = `Hello Vertex! I would like to enquire about the "${bookingForm.program}" (${bookingForm.plan}${priceSegment}). My details are: Name - ${bookingForm.name}, Age - ${bookingForm.age}, Gender - ${bookingForm.gender}, Phone - ${bookingForm.phone}. Please help me with the next steps.`;
     window.open(`https://wa.me/918488862388?text=${encodeURIComponent(greeting)}`, '_blank');
     setBookingConfirmed(true);
-  }
-
-  const copyUpiId = () => {
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(UPI_ID)
-        .then(() => setBookingStatusMessage("UPI ID copied to clipboard. Paste into your UPI app."))
-        .catch(() => setBookingStatusMessage("Tap the UPI ID to copy it manually."))
-    } else {
-      const textArea = document.createElement('textarea')
-      textArea.value = UPI_ID
-      document.body.appendChild(textArea)
-      textArea.select()
-      try {
-        document.execCommand('copy')
-        setBookingStatusMessage("UPI ID copied to clipboard. Paste into your UPI app.")
-      } catch {
-        setBookingStatusMessage("Tap the UPI ID to copy it manually.")
-      }
-      document.body.removeChild(textArea)
-    }
   }
 
   const renderServiceIcon = (iconName) => {
@@ -537,7 +502,7 @@ function App() {
               <a href="#programs" className="btn btn-secondary">View Programs</a>
             </div>
             <div className="hero-stats animate-hero-stats">
-              <div className="stat-card"><div className="stat-value">100%</div><div className="stat-label">Coached Sessions</div></div>
+              <div className="stat-card"><div className="stat-value">100%</div><div className="stat-label">Private / Semi-Private Fitness Sessions</div></div>
               <div className="stat-card"><div className="stat-value">1-on-1</div><div className="stat-label">Physio & Rehab</div></div>
               <div className="stat-card"><div className="stat-value">Elite</div><div className="stat-label">S&C Facility</div></div>
             </div>
@@ -552,7 +517,7 @@ function App() {
                   <div className="card-icon"><Dumbbell size={18} className="text-white" /></div>
                   <div>
                     <h4>Elite S&C Turf</h4>
-                    <p>Coached Athletics</p>
+                    <p>S&C Training</p>
                   </div>
                 </div>
               </div>
@@ -579,27 +544,27 @@ function App() {
         </div>
         <div className="container">
           <div className="section-header text-center reveal">
-            <h2 className="text-gradient">OUR PERFORMANCE ECOSYSTEM</h2>
-            <p className="section-subtitle">We specialize in bridging the gap between rehabilitation therapy and athletic physical performance. No templates, only customized progression.</p>
+            <h2 className="text-gradient">OUR PERFORMANCE</h2>
+            <p className="section-subtitle">We customise your fitness session based on your own needs and goals. We also specialise in bridging the gap between rehabilitation therapy and athletic physical performance. No templates, only customized progression.</p>
           </div>
           <div className="highlight-showcase">
             <div className="highlight-content reveal">
-              <div className="badge-pill">Sports Rehab & S&C</div>
-              <h3>Physio + Fitness + Rehab Under One Roof</h3>
-              <p>At Vertex Performance, we deliver specialized physiotherapy, movement recovery, and high-performance athletic strength training. Our unified facility ensures your physical rehabilitation transitions seamlessly into strength-building, overseen by expert trainers and certified physiotherapists.</p>
+              <div className="badge-pill">S&C & Sports Rehab</div>
+              <h3>Fitness + Rehab + Physio Under One Roof</h3>
+              <p>At Vertex Performance, we focus on high-performance athletic strength training, customized fitness programming, and progressive physical conditioning. While we specialize in bridging the gap between active rehabilitation and performance, our primary focus is S&C and gym training, helping you build power, agility, and elite physical resilience under the guidance of expert coaches.</p>
               <ul className="highlight-checklist">
-                <li><div className="check-icon"><Check size={16} /></div><span><strong>Expert Coaches & Physiotherapists:</strong> Working collaboratively to optimize recovery and strength limits.</span></li>
-                <li><div className="check-icon"><Check size={16} /></div><span><strong>Customized Performance Programming:</strong> Every block matches your specific joints, goals, and mobility screens.</span></li>
-                <li><div className="check-icon"><Check size={16} /></div><span><strong>Objective Performance Tracking:</strong> Monitoring velocity, force outputs, and functional recovery rates.</span></li>
+                <li><div className="check-icon"><Check size={16} /></div><span><strong>Expert S&C Coaches & Trainers:</strong> Certified professionals dedicated to optimizing your lifting form, strength capacity, and athletic performance.</span></li>
+                <li><div className="check-icon"><Check size={16} /></div><span><strong>Customized Gym & S&C Programming:</strong> Tailored fitness sessions built around your specific joints, strength level, and body composition goals.</span></li>
+                <li><div className="check-icon"><Check size={16} /></div><span><strong>Objective Fitness Tracking:</strong> Monitoring velocity-based metrics, force outputs, and progressive overload milestones.</span></li>
               </ul>
             </div>
             <div className="highlight-image-container reveal" onMouseMove={handleCard3DTilt} onMouseLeave={handleCard3DReset}>
-              <img src={gallery1Img} alt="Vertex Performance S&C Gym Floor" className="highlight-img" style={{ transition: 'transform 0.15s ease' }} />
+              <img src={gallery3Img} alt="Vertex Performance S&C Gym Floor" className="highlight-img" style={{ transition: 'transform 0.15s ease' }} />
               <div className="highlight-overlay-glow"></div>
             </div>
           </div>
           <div className="trust-badges-row reveal">
-            <div className="trust-badge"><span className="badge-bullet"></span><span>Expert Care</span></div>
+            <div className="trust-badge"><span className="badge-bullet"></span><span>Elite Gym & S&C</span></div>
             <div className="trust-badge"><span className="badge-bullet"></span><span>Better Performance</span></div>
             <div className="trust-badge"><span className="badge-bullet"></span><span>Stronger You</span></div>
           </div>
@@ -900,7 +865,7 @@ function App() {
             <div className="standalone-promo-card demo-promo glass">
               <div className="promo-badge trial">LOW COMMITMENT</div>
               <h3>Demo Session</h3>
-              <p>Try a single coached session to evaluate our trainers, facility, and training approach.</p>
+              <p>Try a single private / semi-private fitness session to evaluate our trainers, facility, and training approach.</p>
               <div className="price-tag"><span className="amount">₹299</span><span className="period">/ single session</span></div>
               <button onClick={() => triggerBooking('Trial Demo Session', 'Single Session', '₹299')} className="btn btn-primary text-white w-full">Book Demo Session</button>
             </div>
@@ -983,8 +948,8 @@ function App() {
         <div className="container">
           <div className="footer-top-grid">
             <div className="footer-brand">
-              <div className="logo-link mb-3"><img src={logoFull} alt="Vertex Performance Logo" className="logo-img-full footer-logo-img" /></div>
-              <p className="mb-4">Bridging athletic excellence and professional physiotherapy. Discover science-backed S&C programming tailored to unlock physical resilience.</p>
+              <div className="footer-logo-wrapper mb-3"><img src={logoWhite} alt="Vertex Performance Logo" className="logo-img-full footer-logo-img" /></div>
+              <p className="mb-4">Discover science-backed S&C programming tailored to unlock physical resilience, bridging athletic excellence with professional physiotherapy.</p>
               <div className="footer-socials"><a href="https://www.instagram.com/vertex_performance_/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram"><InstagramIcon /></a><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Facebook"><FacebookIcon /></a><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn"><LinkedinIcon /></a></div>
             </div>
             <div className="footer-links-grid">
@@ -1005,43 +970,18 @@ function App() {
         <div className="booking-modal-overlay" onClick={() => setBookingModalOpen(false)}>
           <div className="booking-modal-panel glass animate-slide-up" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close-btn" onClick={() => setBookingModalOpen(false)}><X size={24} /></button>
-            {bookingStep === 1 ? (
-              <form onSubmit={handleBookingSubmit} className="booking-modal-form">
-                <h3>Schedule Your Training Slot</h3>
-                <p className="subtitle">Selected: <strong>{bookingForm.program}</strong> ({bookingForm.plan}{bookingForm.price ? ` @ ${bookingForm.price}` : ''})</p>
-                {bookingNeedsQrStep && <div className="booking-status-note booking-info-note">This booking type uses UPI QR first, then WhatsApp to confirm your request.</div>}
-                {bookingStatusMessage && <div className="booking-status-note">{bookingStatusMessage}</div>}
-                <div className="form-group"><label>Full Name *</label><input type="text" value={bookingForm.name} onChange={(e) => setBookingForm({...bookingForm, name: e.target.value})} required /></div>
-                <div className="form-group-row">
-                  <div className="form-group"><label>Age *</label><input type="number" value={bookingForm.age} onChange={(e) => setBookingForm({...bookingForm, age: e.target.value})} required /></div>
-                  <div className="form-group"><label>Gender *</label><select value={bookingForm.gender} onChange={(e) => setBookingForm({...bookingForm, gender: e.target.value})}><option>Male</option><option>Female</option><option>Other</option></select></div>
-                </div>
-                <div className="form-group"><label>Phone Number *</label><input type="tel" value={bookingForm.phone} onChange={(e) => setBookingForm({...bookingForm, phone: e.target.value})} required /></div>
-                <button type="submit" className="btn btn-primary w-full mt-4">{bookingNeedsQrStep ? 'Proceed to UPI QR' : 'Continue on WhatsApp'}</button>
-              </form>
-            ) : (
-              <div className="booking-modal-payment text-center">
-                <h3>UPI Payment QR</h3>
-                <p className="subtitle">This booking type uses UPI QR first. Scan the code, then open WhatsApp to confirm your booking for <strong>{bookingForm.program}</strong>.</p>
-                {bookingStatusMessage && <div className="booking-status-note">{bookingStatusMessage}</div>}
-                {bookingEmailSent && <div className="booking-status-note booking-success-note">Email enquiry was sent successfully.</div>}
-                <div className="qr-code-frame">
-                  <img src={upiQr} alt="Vertex UPI QR Code" className="qr-image" />
-                </div>
-                <div className="upi-fallback-row">
-                  <span>UPI ID:</span>
-                  <code>{UPI_ID}</code>
-                  <button type="button" className="btn-copy-upi" onClick={copyUpiId}>Copy</button>
-                </div>
-                <div className="payment-details-box">
-                  <p><strong>Program:</strong> {bookingForm.program}</p>
-                  <p><strong>Plan:</strong> {bookingForm.plan}</p>
-                  {bookingForm.price && <p><strong>Price:</strong> {bookingForm.price}</p>}
-                </div>
-                <button onClick={executeWhatsAppRedirect} className="btn btn-primary w-full mt-4">Open WhatsApp</button>
-                <button type="button" onClick={() => setBookingStep(1)} className="btn btn-secondary btn-sm w-full mt-2">← Back to Details Form</button>
+            <form onSubmit={handleBookingSubmit} className="booking-modal-form">
+              <h3>Schedule Your Training Slot</h3>
+              <p className="subtitle">Selected: <strong>{bookingForm.program}</strong> ({bookingForm.plan}{bookingForm.price ? ` @ ${bookingForm.price}` : ''})</p>
+              {bookingStatusMessage && <div className="booking-status-note">{bookingStatusMessage}</div>}
+              <div className="form-group"><label>Full Name *</label><input type="text" value={bookingForm.name} onChange={(e) => setBookingForm({...bookingForm, name: e.target.value})} required /></div>
+              <div className="form-group-row">
+                <div className="form-group"><label>Age *</label><input type="number" value={bookingForm.age} onChange={(e) => setBookingForm({...bookingForm, age: e.target.value})} required /></div>
+                <div className="form-group"><label>Gender *</label><select value={bookingForm.gender} onChange={(e) => setBookingForm({...bookingForm, gender: e.target.value})}><option>Male</option><option>Female</option><option>Other</option></select></div>
               </div>
-            )}
+              <div className="form-group"><label>Phone Number *</label><input type="tel" value={bookingForm.phone} onChange={(e) => setBookingForm({...bookingForm, phone: e.target.value})} required /></div>
+              <button type="submit" className="btn btn-primary w-full mt-4">Continue on WhatsApp</button>
+            </form>
           </div>
         </div>
       )}
