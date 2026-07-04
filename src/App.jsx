@@ -667,7 +667,7 @@ function App() {
               <div className="coach-floating-identity glass">
                 <div className="badge-pill coach-pill">Head Coach, Vertex Performance</div>
                 <h3 className="text-gradient coach-huge-name">ADEEP MOHAMMED S</h3>
-                <p className="coach-title text-cyan">High-Performance Taekwondo Coach &amp; Strength &amp; Conditioning Specialist</p>
+                <p className="coach-title text-cyan">High performance Strength and Conditioning Personal Trainer<br />International Taekwondo Coach</p>
               </div>
             </div>
 
