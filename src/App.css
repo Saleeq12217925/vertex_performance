@@ -1070,14 +1070,14 @@ body {
   position: absolute;
   bottom: -30px;
   right: -30px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(248, 250, 254, 0.6) 0%, rgba(240, 245, 255, 0.5) 100%);
+  backdrop-filter: blur(30px) saturate(1.2);
+  -webkit-backdrop-filter: blur(30px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   padding: 32px;
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 40px -10px rgba(0, 37, 82, 0.15);
-  max-width: 85%;
+  box-shadow: 0 20px 60px -15px rgba(0, 37, 82, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  max-width: 95%;
   z-index: 10;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1100,7 +1100,7 @@ body {
 
 .coach-huge-name {
   font-family: var(--font-heading);
-  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
   line-height: 1.1;
   margin-bottom: 8px;
   letter-spacing: -0.02em;
@@ -1108,9 +1108,10 @@ body {
 }
 
 .coach-title {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.1rem;
   color: var(--primary-deep);
+  line-height: 1.5;
 }
 
 .coach-pill {
