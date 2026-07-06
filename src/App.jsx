@@ -189,7 +189,7 @@ const imageRotations = {
 
 // Map the images to categories
 const coachGalleries = {
-  'experience': [...coachImagesList.slice(0, 7), coachImagesList[7]],
+  'experience': [...coachImagesList.slice(0, 3), ...coachImagesList.slice(4, 7), coachImagesList[7]],
   'certifications': [
     ...coachImagesList.slice(8, 14),
     coachImagesList[14],
